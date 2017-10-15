@@ -7,11 +7,13 @@ const playback = require('../../src/playback'),
 let osc, oscListen, msg
 
 const closePortCheck = () => {
-  if (osc._port && osc._port.socket) {
-    osc._port.socket.should.not.have.deep.property(null)
-    osc.closePort()
-    osc._port.socket.should.have.deep.property('_handle', null)
-  }
+  [osc, oscListen].forEach(osc => {
+    if (osc._port && osc._port.socket) {
+      osc._port.socket.should.not.have.deep.property('_handle', null)
+      osc.closePort()
+      osc._port.socket.should.have.deep.property('_handle', null)
+    }
+  })
 }
 
 const config = {
