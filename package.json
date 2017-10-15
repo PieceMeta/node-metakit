@@ -1,0 +1,63 @@
+{
+  "name": "metakit",
+  "version": "0.1.0",
+  "description": "A toolkit to handle storage, playback and distribution of structured alphanumerical data.",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "cross-env NODE_ENV=production babel -d dist src",
+    "watch": "cross-env NODE_ENV=dev babel --watch -d dist src",
+    "test": "echo \"Yikes! No tests yet.\" && exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PieceMeta/node-metakit.git"
+  },
+  "author": "A. Koch / Motion Bank",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/PieceMeta/node-metakit/issues"
+  },
+  "engines": {
+    "node": ">= 8.6.0",
+    "npm": ">= 5.3.0"
+  },
+  "bin": {
+    "mtk-convert": "dist/cli/convert.js",
+    "mtk-reduce": "dist/cli/reduce.js",
+    "mtk-playback": "dist/cli/playback.js"
+  },
+  "homepage": "https://github.com/PieceMeta/node-metakit#readme",
+  "dependencies": {
+    "big.js": "^5.0.2",
+    "bignumber.js": "^4.1.0",
+    "bluebird": "^3.5.1",
+    "clui": "^0.3.6",
+    "colors": "^1.1.2",
+    "cross-env": "^5.0.5",
+    "d3-node": "^1.1.1",
+    "debug": "^3.1.0",
+    "fast-csv": "^2.4.1",
+    "microtime": "^2.1.6",
+    "moment": "^2.19.1",
+    "mz": "^2.7.0",
+    "nanotimer": "^0.3.15",
+    "node-lmdb": "^0.4.13",
+    "osc": "^2.2.0",
+    "slug": "^0.9.1",
+    "tiny-emitter": "^2.0.2",
+    "uuid": "^3.1.0",
+    "vectorious": "^4.8.1",
+    "yargs": "^9.0.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.0",
+    "eslint": "^4.9.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-node": "^5.2.0",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1"
+  }
+}
