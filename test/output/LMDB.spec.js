@@ -1,5 +1,3 @@
-import LMDB from '../../src/output/lmdb'
-
 const chai = require('chai'),
   path = require('path'),
   chance = new (require('chance'))(),
@@ -13,7 +11,7 @@ const config = {
   filepath: path.resolve(`/var/tmp/mtk-testlmdb-${chance.word({syllables: 3})}`),
   max_gb: 4,
   max_dbs: 10,
-  generate_entries: 1000,
+  generate_entries: 200,
   entry_length: 100,
   key_length: 32
 }
@@ -63,7 +61,7 @@ describe('output.LMDB', () => {
       vals.push(new Float64Array(config.entry_length).map(() => {
         return chance.floating()
       }))
-      lmdb.put(txn, dbId, LMDB.stringKeyFromFloat(i, config.key_length), vals[vals.length - 1])
+      lmdb.put(txn, dbId, output.LMDB.stringKeyFromFloat(i, config.key_length), vals[vals.length - 1])
     }
   })
   it('Commits write transaction', () => {
@@ -76,12 +74,12 @@ describe('output.LMDB', () => {
   it('Acquires a cursor at default position (first entry)', () => {
     lmdb.initCursor(txn, dbId)
     lmdb._meta[dbId].should.have.property('cursor')
-    lmdb._meta[dbId].cursor.key.should.equal(LMDB.stringKeyFromFloat(0, config.key_length))
+    lmdb._meta[dbId].cursor.key.should.equal(output.LMDB.stringKeyFromFloat(0, config.key_length))
   })
   it('Gets parsed data at current cursor position and does not parse key', () => {
     const result = lmdb.getCursorData(txn, dbId, false)
     result.should.have.property('key')
-    result.key.should.equal(LMDB.stringKeyFromFloat(0, config.key_length))
+    result.key.should.equal(output.LMDB.stringKeyFromFloat(0, config.key_length))
     result.should.have.property('data')
     result.data.should.be.instanceOf(data.TypedBufferView)
     let i = 0
@@ -100,7 +98,7 @@ describe('output.LMDB', () => {
   it('Gets raw bytes at current cursor position', () => {
     const result = lmdb.getCursorRaw(txn, dbId, false)
     result.should.have.property('key')
-    result.key.should.equal(LMDB.stringKeyFromFloat(0, config.key_length))
+    result.key.should.equal(output.LMDB.stringKeyFromFloat(0, config.key_length))
     result.should.have.property('buffer')
     result.buffer.should.be.instanceOf(Uint8Array)
     result.buffer.length.should.equal(config.entry_length * Float64Array.BYTES_PER_ELEMENT)
