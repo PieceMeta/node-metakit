@@ -3,7 +3,7 @@ chai.should()
 
 const types = require('../../../src/data/types/index')
 
-describe('data.Double', () => {
+describe('data.types.Double', () => {
   it('Creates a Double (single value) instance from a string value', () => {
     const double = types.make(types.MKT_DOUBLE_VALUE, undefined, '0.00000005')
     double.constructor.name.should.equal('Double')

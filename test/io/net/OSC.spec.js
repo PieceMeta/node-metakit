@@ -34,7 +34,7 @@ const config = {
   custom_timestamp: new Timestamp('5e10')
 }
 
-describe('OSC', () => {
+describe('io.net.OSC', () => {
   it(`Initializes a new OSC instance with target ${config.port_config.remoteAddress}:${config.port_config.remotePort} ` +
     `over UDP, listening on ${config.listen_config.localAddress}:${config.listen_config.localPort}`, () => {
     osc = new OSC()

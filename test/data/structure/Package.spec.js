@@ -7,7 +7,7 @@ const Chance = require('chance'),
   chance = new Chance(),
   Package = require('../../../src/data/structure/index').Package
 
-describe('data.Package', () => {
+describe('data.structure.Package', () => {
   it('Creates new empty data Package', () => {
     const filepath = path.resolve(`/var/tmp/mtk-testpkg-${chance.word({syllables: 3})}`)
     const config = {

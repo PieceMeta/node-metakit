@@ -4,7 +4,7 @@ chai.should()
 
 const CSV = require('../../../src/io/file/index').CSV
 
-describe('input.CSV', () => {
+describe('io.file.CSV', () => {
   it('Parses CSV file from path', () => {
     const entries = []
     CSV.parseFile(

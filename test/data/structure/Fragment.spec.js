@@ -4,7 +4,7 @@ chai.should()
 const Fragment = require('../../../src/data/index').structure.Fragment,
   types = require('../../../src/data/index').types
 
-describe('data.Fragment', () => {
+describe('data.structure.Fragment', () => {
   it('Creates an empty data fragment of type FLOAT64_MATRIX in the shape [[0, 0], [0, 0]]', () => {
     const config = {
       type: types.MKT_DOUBLE_MATRIX,

@@ -6,7 +6,7 @@ const Chance = require('chance'),
   chance = new Chance(),
   View = require('../../../src/data/structure/index').View
 
-describe('data.View', () => {
+describe('data.structure.View', () => {
   it('Creates and inits new empty data View', () => {
     const config = {
       meta: {
