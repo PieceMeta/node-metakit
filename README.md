@@ -5,6 +5,7 @@ A toolkit to handle storage, playback and distribution of structured alphanumeri
 [![npm version](https://badge.fury.io/js/metakit.svg)](https://badge.fury.io/js/metakit)
 [![Maintainability](https://api.codeclimate.com/v1/badges/7f4dbdb7d4dc17aa9dcb/maintainability)](https://codeclimate.com/github/PieceMeta/node-metakit/maintainability)
 [![Build Status](https://travis-ci.org/PieceMeta/node-metakit.svg?branch=master)](https://travis-ci.org/PieceMeta/node-metakit)
+[![Dependency Status](https://gemnasium.com/badges/github.com/PieceMeta/node-metakit.svg)](https://gemnasium.com/github.com/PieceMeta/node-metakit)
 
 ## Requirements
 

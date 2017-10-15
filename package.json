@@ -1,12 +1,12 @@
 {
   "name": "metakit",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A toolkit to handle storage, playback and distribution of structured alphanumerical data.",
   "main": "dist/index.js",
   "scripts": {
     "build": "cross-env NODE_ENV=production babel --copy-files -d dist src",
     "watch": "cross-env NODE_ENV=dev babel --copy-files --watch -d dist src",
-    "test": "echo \"Yikes! No tests yet.\" && exit 0"
+    "test": "cross-env NODE_ENV=production mocha $(find test -path '*.spec.*') --require babel-core/register --recursive --no-timeouts"
   },
   "repository": {
     "type": "git",
@@ -53,11 +53,15 @@
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-preset-env": "^1.6.0",
+    "chai": "^4.1.2",
+    "chance": "^1.0.11",
     "eslint": "^4.9.0",
     "eslint-config-standard": "^10.2.1",
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-node": "^5.2.0",
     "eslint-plugin-promise": "^3.6.0",
-    "eslint-plugin-standard": "^3.0.1"
+    "eslint-plugin-standard": "^3.0.1",
+    "mocha": "^4.0.1",
+    "sinon": "^4.0.1"
   }
 }
