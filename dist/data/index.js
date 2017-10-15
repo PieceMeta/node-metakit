@@ -1,47 +1,45 @@
 'use strict';
 
 exports.__esModule = true;
-exports.TypedBufferView = exports.Types = exports.Timestamp = exports.Range = exports.View = exports.Package = exports.Fragment = exports.Double = undefined;
+exports.DataError = exports.util = exports.types = exports.structure = undefined;
 
-var _double = require('./double');
+var _structure = require('./structure');
 
-var _double2 = _interopRequireDefault(_double);
+var structure = _interopRequireWildcard(_structure);
 
-var _fragment = require('./fragment');
+var _types = require('./types');
 
-var _fragment2 = _interopRequireDefault(_fragment);
+var types = _interopRequireWildcard(_types);
 
-var _package = require('./package');
+var _util = require('./util');
 
-var _package2 = _interopRequireDefault(_package);
+var util = _interopRequireWildcard(_util);
 
-var _view = require('./view');
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-var _view2 = _interopRequireDefault(_view);
+class DataError extends Error {
+  constructor(code) {
+    super(DataError.messages.error[code]);
+    Error.captureStackTrace(this, DataError);
+    this.code = code;
+  }
+  static get types() {
+    return {
+      INVALID_TYPE: 0,
+      BAD_PARAMS: 1
+    };
+  }
+  static get messages() {
+    return {
+      error: {
+        0: 'Invalid Fragment type',
+        1: 'Bad parameters'
+      }
+    };
+  }
+}
 
-var _range = require('./range');
-
-var _range2 = _interopRequireDefault(_range);
-
-var _timestamp = require('./timestamp');
-
-var _timestamp2 = _interopRequireDefault(_timestamp);
-
-var _dataTypes = require('./data-types');
-
-var _dataTypes2 = _interopRequireDefault(_dataTypes);
-
-var _typedArray = require('./typed-array');
-
-var _typedArray2 = _interopRequireDefault(_typedArray);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.Double = _double2.default;
-exports.Fragment = _fragment2.default;
-exports.Package = _package2.default;
-exports.View = _view2.default;
-exports.Range = _range2.default;
-exports.Timestamp = _timestamp2.default;
-exports.Types = _dataTypes2.default;
-exports.TypedBufferView = _typedArray2.default;
+exports.structure = structure;
+exports.types = types;
+exports.util = util;
+exports.DataError = DataError;

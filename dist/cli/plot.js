@@ -2,7 +2,7 @@
 'use strict';
 
 const yargs = require('yargs') // eslint-disable-line
-.command(['fps', '*'], 'Reduce FPS rate of an LMDB db and output as LMDB and HDF5', () => {}, argv => {
+.command(['fps', '*'], 'Reduce FPS rate of an LMDB db and io as LMDB and HDF5', () => {}, argv => {
   process.env.IN_FILE = argv.infile;
   process.env.OUT_FILE = argv.outfile;
   process.env.FPS = argv.fps;
@@ -17,7 +17,7 @@ const yargs = require('yargs') // eslint-disable-line
 })
 /* .option('outfile', {
   alias: 'o',
-  describe: 'LMDB output file, also used for HDF5',
+  describe: 'LMDB io file, also used for HDF5',
   required: true
 }) */
 .option('fps', {

@@ -1,15 +1,13 @@
 const convert = require('./convert'),
   data = require('./data'),
-  input = require('./input'),
-  output = require('./output'),
-  playback = require('./playback'),
-  util = require('./util')
+  io = require('./io'),
+  processors = require('./processors'),
+  services = require('./services')
 
 module.exports = {
   convert,
   data,
-  input,
-  output,
-  playback,
-  util
+  io,
+  processors,
+  services
 }

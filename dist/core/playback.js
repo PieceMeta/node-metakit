@@ -6,9 +6,9 @@ const path = require('path'),
       Big = require('big.js'),
       CLI = require('clui'),
       PB = require('../playback'),
-      Stats = require('../util').Stats,
-      Logger = require('../util').Logger,
-      LMDB = require('../output').LMDB;
+      Stats = require('../services').Stats,
+      Logger = require('../services').Logger,
+      LMDB = require('../io/file/index').LMDB;
 
 const streams = {},
       spinner = new CLI.Spinner(),
@@ -25,7 +25,7 @@ osc.on('ready', function () {
     const address = process.env.OSC_ADDRESS || `/${id.split('-')[0]}`,
           proc = {
       seq: new PB.Scheduler(),
-      frames: new PB.Frames(),
+      frames: new PB.CompressFPS(),
       stats: new Stats()
     };
     proc.frames.fps = process.env.FPS;
@@ -55,7 +55,7 @@ osc.on('ready', function () {
         keyDiff = entry.key.minus(keyMillis);
         proc.frames.data = entry.data;
         while (keyDiff.lt(proc.frames.interval.millis) && keyDiff.gte(Big(0))) {
-          proc.frames.interpolate(entry.data, PB.Frames.INTERPOLATE.MAX);
+          proc.frames.interpolate(entry.data, PB.CompressFPS.INTERPOLATE.MAX);
           lmdb.advanceCursor(id);
           entry = lmdb.getCursorData(txn, id, true);
           keyDiff = entry.key.minus(keyMillis);

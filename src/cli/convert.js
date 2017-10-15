@@ -27,7 +27,7 @@ const yargs = require('yargs') // eslint-disable-line
   })
   .option('outdir', {
     alias: 'o',
-    describe: 'LMDB output directory',
+    describe: 'LMDB io directory',
     required: true
   })
   .option('type', {

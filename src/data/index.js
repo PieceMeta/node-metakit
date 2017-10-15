@@ -1,19 +1,32 @@
-import Double from './double'
-import Fragment from './fragment'
-import Package from './package'
-import View from './view'
-import Range from './range'
-import Timestamp from './timestamp'
-import Types from './data-types'
-import TypedBufferView from './typed-array'
+import * as structure from './structure'
+import * as types from './types'
+import * as util from './util'
+
+class DataError extends Error {
+  constructor (code) {
+    super(DataError.messages.error[code])
+    Error.captureStackTrace(this, DataError)
+    this.code = code
+  }
+  static get types () {
+    return {
+      INVALID_TYPE: 0,
+      BAD_PARAMS: 1
+    }
+  }
+  static get messages () {
+    return {
+      error: {
+        0: 'Invalid Fragment type',
+        1: 'Bad parameters'
+      }
+    }
+  }
+}
 
 export {
-  Double,
-  Fragment,
-  Package,
-  View,
-  Range,
-  Timestamp,
-  Types,
-  TypedBufferView
+  structure,
+  types,
+  util,
+  DataError
 }

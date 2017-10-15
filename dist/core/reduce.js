@@ -4,10 +4,10 @@ require('colors');
 const path = require('path'),
       Big = require('big.js'),
       CLI = require('clui'),
-      LMDB = require('../output').LMDB,
+      LMDB = require('../io/file/index').LMDB,
 
-// HDF5 = require('../output').HDF5,
-Stats = require('../util').Stats;
+// HDF5 = require('../io').HDF5,
+Stats = require('../services').Stats;
 
 const infile = path.resolve(process.env.IN_FILE),
       outfile = path.resolve(process.env.OUT_FILE),

@@ -1,7 +1,7 @@
 const chai = require('chai')
 chai.should()
 
-const DataError = require('../../src/data/data-error').default
+const DataError = require('../../src/data').DataError
 
 describe('data.DataError', () => {
   it('Creates new error instance', () => {

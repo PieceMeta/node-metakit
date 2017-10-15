@@ -2,8 +2,8 @@ require('colors')
 const path = require('path'),
   fs = require('mz/fs'),
   Promise = require('bluebird'),
-  Logger = require('../util').Logger,
-  LMDB = require('../output').LMDB,
+  Logger = require('../services').Logger,
+  LMDB = require('../io/file/index').LMDB,
   LineChart = require('../plot').LineChart
 
 const lmdb = new LMDB(),
