@@ -28,6 +28,8 @@ var _big = require('big.js');
 
 var _big2 = _interopRequireDefault(_big);
 
+var _data = require('../data');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const msgs = {
@@ -97,7 +99,13 @@ class LMDB {
     _assert2.default.notEqual(typeof txn, 'undefined', msgs.no_txn);
     _assert2.default.notEqual(typeof this._meta[dbId].dbi, 'undefined', msgs.no_dbi);
     _assert2.default.equal(typeof key, 'string', msgs.bad_arg);
-    txn.putBinary(this._meta[dbId].dbi, key, data);
+    let out;
+    if (data.buffer) {
+      out = Buffer.from(data.buffer, data.byteOffset, data.byteLength - data.byteOffset);
+    } else {
+      out = data;
+    }
+    txn.putBinary(this._meta[dbId].dbi, key, out);
   }
   initCursor(txn, dbId, positionKey = undefined) {
     _assert2.default.notEqual(typeof txn, 'undefined', msgs.no_txn);
@@ -142,18 +150,18 @@ class LMDB {
     if (!res) {
       return null;
     }
-    let data = res.buffer.slice(res.buffer.byteOffset, res.buffer.byteOffset + res.buffer.byteLength);
+    let type;
     switch (this._meta[dbId].meta.type) {
       case LMDB.TYPES.FLOAT32:
-        data = new Float32Array(data, data.byteOffset, data.byteLength / Float32Array.BYTES_PER_ELEMENT);
+        type = Float32Array;
         break;
       default:
-        data = new Float64Array(data, data.byteOffset, data.byteLength / Float64Array.BYTES_PER_ELEMENT);
+        type = Float64Array;
     }
     if (this._meta[dbId].cursor.key) {
       return {
         key: parseKey ? LMDB.parseKey(this._meta[dbId].cursor.key) : this._meta[dbId].cursor.key,
-        data
+        data: new _data.TypedBufferView(res.buffer, type, res.buffer.byteOffset, res.buffer.length)
       };
     }
   }
@@ -167,13 +175,23 @@ class LMDB {
     _assert2.default.ok(this.dbIds.length > 0, msgs.no_meta);
     _fs2.default.writeFileSync(_path2.default.join(this._filename, 'meta.json'), JSON.stringify(this.meta, null, 2));
   }
+  closeDb(dbId) {
+    _assert2.default.equal(typeof dbId, 'string', msgs.bad_arg);
+    _assert2.default.notEqual(typeof this._meta[dbId], 'undefined', msgs.no_meta);
+    if (this._meta[dbId].dbi) {
+      this._meta[dbId].dbi.close();
+      this._meta[dbId].dbi = null;
+    }
+  }
   close() {
     for (let id of this.dbIds) {
       if (this._meta[id].dbi) {
         this._meta[id].dbi.close();
+        this._meta[id].dbi = null;
       }
     }
     this._env.close();
+    this._env = null;
   }
   get env() {
     return this._env;
@@ -213,11 +231,19 @@ class LMDB {
   set dbIds(val) {
     /* ignored */
   }
+  get cursors() {
+    const cursors = {},
+          _ctx = this;
+    Object.keys(_ctx._meta).forEach(id => {
+      cursors[id] = _ctx._meta[id].cursor;
+    });
+    return cursors;
+  }
   static stringKeyFromFloat(value, length = 16, precision = 6, signed = true) {
     const fixed = (0, _big2.default)(Math.abs(value)).toFixed(precision);
     let prefix = '';
     if (signed) {
-      prefix = Math.sign(value) > 0 ? '+' : '-';
+      prefix = Math.sign(value) >= 0 ? '+' : '-';
     }
     return prefix + (0, _util.padString)(fixed, length - prefix.length, '0', true);
   }
