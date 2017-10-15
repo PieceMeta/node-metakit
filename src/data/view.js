@@ -39,7 +39,7 @@ class View {
       .then(res => {
         _view._data = res.data
         _view._paths = res.paths
-        if (!this.meta.created) {
+        if (!_view.meta.created) {
           _view._dirty = true
           _view.meta.created = moment()
           _view._config.id = uuid4()

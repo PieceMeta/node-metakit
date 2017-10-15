@@ -1,9 +1,13 @@
-import Fragemnt from './fragment'
+import Fragment from './fragment'
+import Package from './package'
 import View from './view'
 import Range from './range'
+import Types from './data-types'
 
 export {
-  Fragemnt,
+  Fragment,
+  Package,
   View,
-  Range
+  Range,
+  Types
 }

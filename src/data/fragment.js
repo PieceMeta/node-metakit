@@ -90,7 +90,7 @@ class Fragment extends TinyEmitter {
         this._value = new vectorious.Matrix(config.shape)
         break
       case DataTypes.TYPE_FLOAT64_VECTOR:
-        this._value = new vectorious.Vector()
+        this._value = new vectorious.Vector(config.shape)
         break
       case DataTypes.TYPE_FLOAT64_ARRAY:
         assert(typeof config.shape === 'number', DataError.messages[DataError.types.BAD_PARAMS])
