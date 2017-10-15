@@ -7,7 +7,7 @@ class Logger {
   static error (msg) {
     process.stderr.write(msg)
   }
-  static debug (msg, module = 'cl') {
+  static debug (msg, module = 'mtk') {
     Debug(module)(msg)
   }
 }

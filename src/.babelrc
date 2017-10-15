@@ -6,7 +6,6 @@
         "targets": {
           "node": "8.6"
         },
-        "copy": true,
         "loose": true,
         "debug": true,
         "modules": "commonjs"

@@ -15,7 +15,7 @@ class Logger {
   static error(msg) {
     process.stderr.write(msg);
   }
-  static debug(msg, module = 'cl') {
+  static debug(msg, module = 'mtk') {
     (0, _debug2.default)(module)(msg);
   }
 }

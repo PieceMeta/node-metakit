@@ -1,0 +1,4 @@
+message View {
+  optional string id = 1;
+  repeated string fragments = 2;
+}

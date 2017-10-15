@@ -1,6 +1,6 @@
 # metakit
 
-A toolkit to handle storage, playback and distribution of structured alphanumerical data.
+A toolkit to handle storage, playback and distribution of structured alphanumerical data. It is ES6 JavaScript built for [Node.js](https://nodejs.org) uses [LMDB](https://en.wikipedia.org/wiki/Lightning_Memory-Mapped_Database) and (soon) [HDF5](https://support.hdfgroup.org/HDF5/) to store data. Data playback is provided over [OSC](http://opensoundcontrol.org/osc) over various transports, such as UDP, TCP and [WebSocket](https://en.wikipedia.org/wiki/WebSocket).
 
 [![npm version](https://badge.fury.io/js/metakit.svg)](https://badge.fury.io/js/metakit)
 [![Code Climate](https://codeclimate.com/github/PieceMeta/node-metakit/badges/gpa.svg)](https://codeclimate.com/github/PieceMeta/node-metakit)
@@ -26,7 +26,9 @@ A toolkit to handle storage, playback and distribution of structured alphanumeri
 
 #### HDF5 library (Optional)
 
-Adds HDF5 compatibility. Needs a rebuild of the project, not (currently) available through npm.
+Adds HDF5 compatibility in addition to LMDB. Needs a rebuild of the project, not (currently) available through NPM.
+
+Note: This is not yet implemented as a proper build option, so for now don't bother reading any further.
 
 Before rebuild, add the hdf5 module with ``npm i hdf5``, then uncomment the HDF refs in ``src/convert/index.js`` and ``src/output/index.js`` and rebuild (see below).
 

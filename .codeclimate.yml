@@ -17,9 +17,7 @@ engines:
 ratings:
   paths:
   - src/**
-  - lib/**
   - "**.md"
 exclude_paths:
 - dist/**
 - node_modules/**
-- build/**
