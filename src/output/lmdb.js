@@ -6,6 +6,8 @@ import lmdb from 'node-lmdb'
 import { padString } from '../util'
 import Big from 'big.js'
 
+import { TypedBufferView } from '../data'
+
 const msgs = {
   env_exists: 'Environment already initialized',
   bad_arg: 'Bad argument type',
@@ -74,7 +76,14 @@ class LMDB {
     assert.notEqual(typeof txn, 'undefined', msgs.no_txn)
     assert.notEqual(typeof this._meta[dbId].dbi, 'undefined', msgs.no_dbi)
     assert.equal(typeof key, 'string', msgs.bad_arg)
-    txn.putBinary(this._meta[dbId].dbi, key, data)
+    let out
+    if (data.buffer) {
+      out = Buffer.from(data.buffer, data.byteOffset, data.byteLength - data.byteOffset)
+    }
+    else {
+      out = data
+    }
+    txn.putBinary(this._meta[dbId].dbi, key, out)
   }
   initCursor (txn, dbId, positionKey = undefined) {
     assert.notEqual(typeof txn, 'undefined', msgs.no_txn)
@@ -119,18 +128,18 @@ class LMDB {
     if (!res) {
       return null
     }
-    let data = res.buffer.slice(res.buffer.byteOffset, res.buffer.byteOffset + res.buffer.byteLength)
+    let type
     switch (this._meta[dbId].meta.type) {
       case LMDB.TYPES.FLOAT32:
-        data = new Float32Array(data, data.byteOffset, data.byteLength / Float32Array.BYTES_PER_ELEMENT)
+        type = Float32Array
         break
       default:
-        data = new Float64Array(data, data.byteOffset, data.byteLength / Float64Array.BYTES_PER_ELEMENT)
+        type = Float64Array
     }
     if (this._meta[dbId].cursor.key) {
       return {
         key: parseKey ? LMDB.parseKey(this._meta[dbId].cursor.key) : this._meta[dbId].cursor.key,
-        data
+        data: new TypedBufferView(res.buffer, type, res.buffer.byteOffset, res.buffer.length)
       }
     }
   }
@@ -144,13 +153,23 @@ class LMDB {
     assert.ok(this.dbIds.length > 0, msgs.no_meta)
     fs.writeFileSync(path.join(this._filename, 'meta.json'), JSON.stringify(this.meta, null, 2))
   }
+  closeDb (dbId) {
+    assert.equal(typeof dbId, 'string', msgs.bad_arg)
+    assert.notEqual(typeof this._meta[dbId], 'undefined', msgs.no_meta)
+    if (this._meta[dbId].dbi) {
+      this._meta[dbId].dbi.close()
+      this._meta[dbId].dbi = null
+    }
+  }
   close () {
     for (let id of this.dbIds) {
       if (this._meta[id].dbi) {
         this._meta[id].dbi.close()
+        this._meta[id].dbi = null
       }
     }
     this._env.close()
+    this._env = null
   }
   get env () {
     return this._env
@@ -190,11 +209,19 @@ class LMDB {
   set dbIds (val) {
     /* ignored */
   }
+  get cursors () {
+    const cursors = {},
+      _ctx = this
+    Object.keys(_ctx._meta).forEach(id => {
+      cursors[id] = _ctx._meta[id].cursor
+    })
+    return cursors
+  }
   static stringKeyFromFloat (value, length = 16, precision = 6, signed = true) {
     const fixed = Big(Math.abs(value)).toFixed(precision)
     let prefix = ''
     if (signed) {
-      prefix = Math.sign(value) > 0 ? '+' : '-'
+      prefix = Math.sign(value) >= 0 ? '+' : '-'
     }
     return prefix + padString(fixed, length - prefix.length, '0', true)
   }
