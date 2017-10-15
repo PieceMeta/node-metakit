@@ -1,37 +1,83 @@
 import osc from 'osc'
-import microtime from 'microtime'
+import assert from 'assert'
 import Emitter from 'tiny-emitter'
+import Timestamp from '../data/timestamp'
 
 class OSC extends Emitter {
-  constructor (local = '0.0.0.0:8888', remote = '127.0.0.1:9999', broadcast = false) {
+  constructor () {
     super()
-    this._port = new osc.UDPPort({
-      localAddress: local.split(':')[0],
-      localPort: parseInt(local.split(':')[1]),
-      remoteAddress: remote.split(':')[0],
-      remotePort: parseInt(remote.split(':')[1]),
-      broadcast
-    })
-    this._port.on('ready', () => {
-      this.emit('ready')
-    })
+    this._transport = undefined
+    this._port = undefined
+    this._port = undefined
+  }
+  setTransport (config, transport) {
+    this._transport = transport
+    this._port = null
+    let TransportConstruct
+    switch (this._transport) {
+      case OSC.transports.TCP_SOCKET:
+        TransportConstruct = osc.TCPSocketPort
+        break
+      case OSC.transports.WEB_SOCKET:
+        break
+      default:
+        TransportConstruct = osc.UDPPort
+    }
+    this._port = new TransportConstruct(config)
+    const _ctx = this
+    if (this._port) {
+      this._port.on('ready', () => {
+        _ctx.emit('ready')
+      })
+    }
+  }
+  openPort () {
+    assert((this._port))
     this._port.open()
+  }
+  closePort () {
+    if (this._port) this._port.close()
+  }
+  listen (forBundles = true) {
+    assert((this._port))
+    const _ctx = this,
+      handleMessage = (msg, timeTag = undefined, info = undefined) => {
+        _ctx.emit(
+          'message',
+          msg,
+          timeTag && Array.isArray(timeTag.raw)
+            ? new Timestamp(timeTag.raw[0] * Math.pow(2, 32) + timeTag.raw[1]) : Timestamp.now(),
+          info
+        )
+      },
+      handleBundle = (bundle, info = undefined) => {
+        _ctx.emit(
+          'bundle',
+          bundle.packets,
+          bundle.timeTag && Array.isArray(bundle.timeTag.raw)
+            ? new Timestamp(bundle.timeTag.raw[0] * Math.pow(2, 32) + bundle.timeTag.raw[1]) : Timestamp.now(),
+          info
+        )
+      }
+    this._port.removeListener('bundle', handleBundle)
+    this._port.removeListener('message', handleMessage)
+    if (forBundles) this._port.on('bundle', handleBundle)
+    else this._port.on('message', handleMessage)
   }
   sendBundle (messages, tSeconds = undefined) {
     if (!Array.isArray(messages)) {
       messages = [messages]
     }
-    if (typeof tSeconds !== 'number') {
-      tSeconds = microtime.nowDouble()
+    if (typeof tSeconds === 'undefined') {
+      tSeconds = Timestamp.now()
     }
-    this._port.send({
+    const bundle = {
       timeTag: osc.timeTag(tSeconds),
       packets: messages
-    })
+    }
+    this._port.send(bundle)
   }
-  close () {
-    this._port.close()
-  }
+
   static buildMessage (address, args = []) {
     const parsedArgs = new Array(args.length)
     args.map((arg, i) => {
@@ -51,6 +97,13 @@ class OSC extends Emitter {
     return {
       address: address,
       args: parsedArgs
+    }
+  }
+  static get transports () {
+    return {
+      UDP: 0,
+      TCP_SOCKET: 1,
+      WEB_SOCKET: 2
     }
   }
 }
