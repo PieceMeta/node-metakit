@@ -114,7 +114,7 @@ class Fragment extends _tinyEmitter2.default {
         this._value = new _vectorious2.default.Matrix(config.shape);
         break;
       case _dataTypes2.default.TYPE_FLOAT64_VECTOR:
-        this._value = new _vectorious2.default.Vector();
+        this._value = new _vectorious2.default.Vector(config.shape);
         break;
       case _dataTypes2.default.TYPE_FLOAT64_ARRAY:
         (0, _assert2.default)(typeof config.shape === 'number', _dataError2.default.messages[_dataError2.default.types.BAD_PARAMS]);

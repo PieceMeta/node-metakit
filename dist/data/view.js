@@ -72,7 +72,7 @@ class View {
     return this._configureLayoutChildren(data, this._config.layout, paths).then(res => {
       _view._data = res.data;
       _view._paths = res.paths;
-      if (!this.meta.created) {
+      if (!_view.meta.created) {
         _view._dirty = true;
         _view.meta.created = (0, _moment2.default)();
         _view._config.id = (0, _v2.default)();
