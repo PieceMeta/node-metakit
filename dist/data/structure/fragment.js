@@ -68,7 +68,7 @@ class Fragment extends _tinyEmitter2.default {
         }
         break;
       default:
-        throw new util.DataError(_index.DataError.types.INVALID_TYPE);
+        throw new _index.DataError(_index.DataError.types.INVALID_TYPE);
     }
     this.emit('update');
   }

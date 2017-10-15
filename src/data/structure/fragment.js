@@ -52,7 +52,7 @@ class Fragment extends TinyEmitter {
         }
         break
       default:
-        throw new util.DataError(DataError.types.INVALID_TYPE)
+        throw new DataError(DataError.types.INVALID_TYPE)
     }
     this.emit('update')
   }
