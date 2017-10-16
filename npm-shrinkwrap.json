@@ -212,6 +212,11 @@
       "dev": true,
       "optional": true
     },
+    "async-lock": {
+      "version": "1.0.0",
+      "resolved": "https://registry.npmjs.org/async-lock/-/async-lock-1.0.0.tgz",
+      "integrity": "sha1-uBq729Km5RZ3OgRLfmkXriAB83A="
+    },
     "asynckit": {
       "version": "0.4.0",
       "resolved": "https://registry.npmjs.org/asynckit/-/asynckit-0.4.0.tgz",

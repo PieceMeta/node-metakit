@@ -28,6 +28,7 @@
   },
   "homepage": "https://github.com/PieceMeta/node-metakit#readme",
   "dependencies": {
+    "async-lock": "^1.0.0",
     "big.js": "^5.0.2",
     "bignumber.js": "^4.1.0",
     "bluebird": "^3.5.1",
