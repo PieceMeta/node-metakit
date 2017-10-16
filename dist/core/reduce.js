@@ -2,12 +2,13 @@
 
 require('colors');
 const path = require('path'),
-      Big = require('big.js'),
       CLI = require('clui'),
-      LMDB = require('../io/file/index').LMDB,
+      Double = require('../data/types/double'),
+      LMDB = require('../io/file').LMDB,
 
 // HDF5 = require('../io').HDF5,
-Stats = require('../services').Stats;
+Stats = require('../services').Stats,
+      util = require('../data/util');
 
 const infile = path.resolve(process.env.IN_FILE),
       outfile = path.resolve(process.env.OUT_FILE),
@@ -15,8 +16,8 @@ const infile = path.resolve(process.env.IN_FILE),
 // basename = path.basename(outfile, path.extname(outfile)),
 statsThreshold = parseInt(process.env.STATS_THRESHOLD) || 100000,
       flushThreshold = parseInt(process.env.FLUSH_THRESHOLD) || 1000,
-      fps = process.env.FPS ? Big(process.env.FPS) : Big('100.0'),
-      interval = Big('1000.0').div(fps),
+      fps = process.env.FPS ? Double(process.env.FPS) : Double('100.0'),
+      interval = Double('1000.0').div(fps),
       debug = process.env.DEBUG_MODE,
       spinner = new CLI.Spinner('Reducing...'),
       lmdb = new LMDB(),
@@ -49,8 +50,8 @@ for (let id of lmdb.dbIds) {
   hdfgroup.title = basename
   hdfgroup.flush()
   */
-  let millis = Big('0'),
-      nextMillis = Big('0'),
+  let millis = Double('0'),
+      nextMillis = Double('0'),
       count = 0,
 
   // table = false,
@@ -69,12 +70,12 @@ for (let id of lmdb.dbIds) {
       statsOut.print();
     }
     max = [];
-    for (let v of entry.data) max.push(Big(v));
+    for (let v of entry.data) max.push(Double(v));
     millis = nextMillis || entry.key;
     nextMillis = nextMillis.add(interval);
     while (entry && entry.key.lt(nextMillis)) {
       for (let i in entry.data) {
-        let v = Big(entry.data[i]);
+        let v = Double(entry.data[i]);
         if (v.abs().gt(max[i].abs())) {
           max[i] = v;
         }
@@ -85,7 +86,7 @@ for (let id of lmdb.dbIds) {
       count = readCounter(count, stats, statsOut);
     }
     max[0] = millis;
-    key = LMDB.stringKeyFromFloat(millis, lmdb.meta[id].key.length, lmdb.meta[id].key.precision, lmdb.meta[id].key.signed);
+    key = util.keyFromDouble(millis, lmdb.meta[id].key.length, lmdb.meta[id].key.precision, lmdb.meta[id].key.signed);
     data = Float64Array.from(max);
     lmdbOut.put(txnWrite, outId, key, data);
     statsOut.addEntries();

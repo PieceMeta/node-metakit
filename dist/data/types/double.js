@@ -13,7 +13,7 @@ _bignumber2.default.config({ ERRORS: false });
 class Double extends _bignumber2.default {
   static fromString(key) {
     if (typeof key === 'string' && key[0] === '+') key = key.substr(1);
-    return key ? new Double(key) : undefined;
+    return key ? new Double(key) : null;
   }
 }
 

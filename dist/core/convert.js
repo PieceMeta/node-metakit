@@ -2,7 +2,7 @@
 
 const path = require('path'),
       CLI = require('clui'),
-      Convert = require('../convert');
+      csvToLMDB = require('../processors').csvToLMDB;
 
 let spinner;
 const infile = path.resolve(process.env.IN_FILE),
@@ -29,16 +29,16 @@ const infile = path.resolve(process.env.IN_FILE),
 Promise.resolve().then(function () {
   switch (outType) {
     case 'lmdb':
-      return Convert.csvToLMDB(infile, outdir, {
+      return csvToLMDB(infile, outdir, {
         flushEvery: 100000,
         metaRange: [0, 2],
         labelRow: 3,
         dataStart: 4,
-        type: process.env.DATA_TYPE || 'Float32',
+        type: process.env.DATA_TYPE || 'Float64',
         key: {
           column: 0,
-          length: 10,
-          precision: 2,
+          length: 12,
+          precision: 3,
           signPrefix: false
         }
       }, statusHandler, endHandler);
