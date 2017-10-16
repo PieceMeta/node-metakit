@@ -3445,8 +3445,7 @@
     "imurmurhash": {
       "version": "0.1.4",
       "resolved": "https://registry.npmjs.org/imurmurhash/-/imurmurhash-0.1.4.tgz",
-      "integrity": "sha1-khi5srkoojixPcT7a21XbyMUU+o=",
-      "dev": true
+      "integrity": "sha1-khi5srkoojixPcT7a21XbyMUU+o="
     },
     "inflight": {
       "version": "1.0.6",
@@ -4086,6 +4085,14 @@
           "resolved": "https://registry.npmjs.org/minimist/-/minimist-0.0.8.tgz",
           "integrity": "sha1-hX/Kv8M5fSYluCKCYuhqp6ARsF0="
         }
+      }
+    },
+    "mkdirp-promise": {
+      "version": "5.0.1",
+      "resolved": "https://registry.npmjs.org/mkdirp-promise/-/mkdirp-promise-5.0.1.tgz",
+      "integrity": "sha1-6bj2jlUsaKnBcTuEiD96HdA5uKE=",
+      "requires": {
+        "mkdirp": "0.5.1"
       }
     },
     "mocha": {
@@ -6484,6 +6491,16 @@
       "dev": true,
       "requires": {
         "mkdirp": "0.5.1"
+      }
+    },
+    "write-file-atomic": {
+      "version": "2.3.0",
+      "resolved": "https://registry.npmjs.org/write-file-atomic/-/write-file-atomic-2.3.0.tgz",
+      "integrity": "sha512-xuPeK4OdjWqtfi59ylvVL0Yn35SF3zgcAcv7rBPFHVaEapaDr4GdGgm3j7ckTwH9wHL7fGmgfAnb0+THrHb8tA==",
+      "requires": {
+        "graceful-fs": "4.1.11",
+        "imurmurhash": "0.1.4",
+        "signal-exit": "3.0.2"
       }
     },
     "ws": {

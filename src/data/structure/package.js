@@ -1,39 +1,34 @@
 import assert from 'assert'
-import uuid4 from 'uuid/v4'
-import fs from 'mz/fs'
 import path from 'path'
-import moment from 'moment'
 import Promise from 'bluebird'
 
 import { DataError } from '../index'
+import { JSONFile } from '../../io/file'
 
 import View from './view'
 
-class Package {
+class Package extends JSONFile {
   constructor (filepath = undefined, config = {}) {
+    super(filepath)
     this._dirty = false
     this._filepath = filepath
-    this._config = Object.assign({
-      id: uuid4(),
-      meta: {
-        created: moment(),
-        updated: undefined
-      },
+    this._config = Object.assign(this._config, {
       views: []
-    }, config)
+    })
+    this._config = Object.assign(this._config, config)
   }
 
   addView (layout) {
     assert.equal(typeof this._filepath, 'string', DataError.messages[DataError.types.BAD_PARAMS])
     const views = this._config.views
     return new View(layout)
-      .init().then(v => {
+      .init()
+      .then(v => {
         views.push(v)
         this._dirty = true
         return v.id
       })
   }
-
   getViewById (id) {
     const view = this.views.find(view => {
       return view.id === id
@@ -54,9 +49,6 @@ class Package {
   get views () {
     return this._config.views
   }
-  get dirty () {
-    return this._dirty
-  }
 
   toJSON () {
     const conf = Object.assign({}, this._config)
@@ -67,35 +59,33 @@ class Package {
     return this.toJSON()
   }
 
+  store (filepath) {
+    const _ctx = this
+    return Promise.resolve().then(() => {
+      return mkdirp(filepath).catch(err => { if (err.code !== 'EEXIST') throw err })
+    }).then(() => {
+      return JSONFile.save(path.join(filepath, 'index.json'), this.toJSON())
+        .then(() => {
+          return Promise.each(_ctx.views, view => {
+            return view.store(_ctx._filepath)
+          })
+        })
+    })
+  }
   close () {
     return Promise.each(this.views, view => view.close())
   }
 
-  static load (filepath) {
-    return fs.readFile(path.join(filepath, 'index.json'))
-      .then(data => JSON.parse(data))
+  static fromFile (filepath) {
+    return Package.load(filepath)
       .then(config => new Package(filepath, config))
       .then(pkg => {
-        return Promise.map(pkg.views, id => View.load(path.join(filepath, `${id}.json`)))
+        return Promise.map(pkg.views, id => View.fromFile(path.join(filepath, `${id}.json`)))
           .then(views => {
             pkg._config.views = views
             return pkg
           })
       })
-  }
-  static save (pkgpath, pkginstance) {
-    return Promise.resolve().then(() => {
-      return fs.mkdir(pkgpath).catch(err => { if (err.code !== 'EEXIST') throw err })
-    }).then(() => {
-      return Promise.each(pkginstance.views, view => {
-        return View.save(pkginstance._filepath, view)
-      })
-    }).then(() => {
-      pkginstance.meta.updated = moment()
-      const configpath = path.join(path.resolve(pkgpath), 'index.json')
-      return fs.writeFile(configpath, pkginstance.toJSON())
-        .then(() => { pkginstance._dirty = false })
-    })
   }
 }
 

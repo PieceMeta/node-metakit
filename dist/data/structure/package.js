@@ -10,17 +10,13 @@ var _v = require('uuid/v4');
 
 var _v2 = _interopRequireDefault(_v);
 
-var _fs = require('mz/fs');
+var _moment = require('moment');
 
-var _fs2 = _interopRequireDefault(_fs);
+var _moment2 = _interopRequireDefault(_moment);
 
 var _path = require('path');
 
 var _path2 = _interopRequireDefault(_path);
-
-var _moment = require('moment');
-
-var _moment2 = _interopRequireDefault(_moment);
 
 var _bluebird = require('bluebird');
 
@@ -31,6 +27,10 @@ var _index = require('../index');
 var _view = require('./view');
 
 var _view2 = _interopRequireDefault(_view);
+
+var _file = require('../../io/file');
+
+var _file2 = _interopRequireDefault(_file);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -78,9 +78,6 @@ class Package {
   get views() {
     return this._config.views;
   }
-  get dirty() {
-    return this._dirty;
-  }
 
   toJSON() {
     const conf = Object.assign({}, this._config);
@@ -93,33 +90,21 @@ class Package {
     return this.toJSON();
   }
 
+  store(filepath) {
+    const _ctx = this;
+    return _file2.default.save(_path2.default.join(_path2.default.resolve(filepath), 'index.json'), this.toJSON()).then(() => {
+      return _bluebird2.default.each(_ctx.views, view => {
+        return _view2.default.save(_ctx._filepath, view);
+      });
+    });
+  }
   close() {
     return _bluebird2.default.each(this.views, view => view.close());
   }
 
-  static load(filepath) {
-    return _fs2.default.readFile(_path2.default.join(filepath, 'index.json')).then(data => JSON.parse(data)).then(config => new Package(filepath, config)).then(pkg => {
-      return _bluebird2.default.map(pkg.views, id => _view2.default.load(_path2.default.join(filepath, `${id}.json`))).then(views => {
-        pkg._config.views = views;
-        return pkg;
-      });
-    });
-  }
-  static save(pkgpath, pkginstance) {
-    return _bluebird2.default.resolve().then(() => {
-      return _fs2.default.mkdir(pkgpath).catch(err => {
-        if (err.code !== 'EEXIST') throw err;
-      });
-    }).then(() => {
-      return _bluebird2.default.each(pkginstance.views, view => {
-        return _view2.default.save(pkginstance._filepath, view);
-      });
-    }).then(() => {
-      pkginstance.meta.updated = (0, _moment2.default)();
-      const configpath = _path2.default.join(_path2.default.resolve(pkgpath), 'index.json');
-      return _fs2.default.writeFile(configpath, pkginstance.toJSON()).then(() => {
-        pkginstance._dirty = false;
-      });
+  static fromJSONFile(filepath) {
+    return _file2.default.load(filepath).then(res => {
+      return new Package(res.data);
     });
   }
 }
