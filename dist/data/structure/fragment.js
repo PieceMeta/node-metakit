@@ -2,15 +2,13 @@
 
 exports.__esModule = true;
 
-var _tinyEmitter = require('tiny-emitter');
-
-var _tinyEmitter2 = _interopRequireDefault(_tinyEmitter);
-
 var _assert = require('assert');
 
 var _assert2 = _interopRequireDefault(_assert);
 
 var _index = require('../index');
+
+var _messaging = require('../../messaging');
 
 var _types = require('../types');
 
@@ -24,7 +22,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-class Fragment extends _tinyEmitter2.default {
+class Fragment extends _messaging.Emitter {
   constructor(config = {}) {
     super();
 

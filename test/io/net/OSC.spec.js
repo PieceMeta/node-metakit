@@ -1,8 +1,10 @@
-const chai = require('chai')
+const
+  helper = require('../../helper'),
+  chai = require('chai')
 chai.should()
 
-const OSC = require('../../../src/io/net').OSC,
-  Timestamp = require('../../../src/data/types/timestamp').default
+const OSC = require(helper.requirePath('io/net')).OSC,
+  Timestamp = require(helper.requirePath('data/types/timestamp')).default
 
 let osc, oscListen, msg
 

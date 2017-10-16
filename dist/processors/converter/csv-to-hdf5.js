@@ -4,34 +4,34 @@ exports.__esModule = true;
 
 require('colors');
 
-var _tinyEmitter = require('tiny-emitter');
-
-var _tinyEmitter2 = _interopRequireDefault(_tinyEmitter);
-
 var _path = require('path');
 
 var _path2 = _interopRequireDefault(_path);
 
-var _double = require('../data/types/double');
+var _baseEmitter = require('../../messaging/base-emitter');
+
+var _baseEmitter2 = _interopRequireDefault(_baseEmitter);
+
+var _double = require('../../data/types/double');
 
 var _double2 = _interopRequireDefault(_double);
 
-var _data = require('../data');
+var _data = require('../../data');
 
-var _file = require('../io/file');
+var _file = require('../../io/file');
 
-var _services = require('../services');
+var _services = require('../../services');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-const csvToHDF5 = function (infile, outdir, options = {}, statusHandler = undefined, endHandler = undefined) {
+const CSVToHDF5 = function (infile, outdir, options = {}, statusHandler = undefined, endHandler = undefined) {
   process.stdout.write(`\nCSV 2 HDF5 ${new Array(61).fill('-').join('')}\n\n`.cyan);
   options = Object.assign({
     flushEvery: 10000,
     dataStart: 0,
     type: _file.HDF5.TYPES.FLOAT64
   }, options);
-  const emitter = new _tinyEmitter2.default(),
+  const emitter = new _baseEmitter2.default(),
         stats = new _services.Stats();
   if (typeof statusHandler === 'function') {
     emitter.on('status', statusHandler);
@@ -112,4 +112,4 @@ const csvToHDF5 = function (infile, outdir, options = {}, statusHandler = undefi
   });
 };
 
-exports.default = csvToHDF5;
+exports.default = CSVToHDF5;

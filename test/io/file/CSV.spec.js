@@ -1,8 +1,10 @@
-const chai = require('chai'),
+const
+  helper = require('../../helper'),
+  chai = require('chai'),
   path = require('path')
 chai.should()
 
-const CSV = require('../../../src/io/file/index').CSV
+const CSV = require(helper.requirePath('io/file')).CSV
 
 describe('io.file.CSV', () => {
   it('Parses CSV file from path', () => {

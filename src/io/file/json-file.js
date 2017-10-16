@@ -1,21 +1,22 @@
 import BaseFile from './base-file'
 
 class JSONFile extends BaseFile {
-  constructor (filepath) {
+  constructor () {
     super({
-      filepath,
-      encoder: data => JSON.stringify(data, null, '\t'),
+      encoder: data => JSON.stringify(this, null, '\t'),
       decoder: JSON.parse,
-      atomic: true,
-      extname: '.json'
+      opts: {
+        atomic: true,
+        ext: '.json'
+      }
     })
-    const _ctx = this
-    return this.load(filepath).then(data => { _ctx._data = data })
   }
 
-  save (filepath = undefined) {
-    const _ctx = this
-    return this.save(filepath || _ctx._config.filepath, _ctx.data)
+  static load (filepath) {
+    return super.load(filepath)
+  }
+  save (filepath) {
+    return super.save(filepath, true)
   }
 }
 

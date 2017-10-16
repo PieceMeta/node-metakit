@@ -1,10 +1,10 @@
-import TinyEmitter from 'tiny-emitter'
 import slug from 'slug'
 import uuid4 from 'uuid/v4'
 
+import { Emitter } from '../../messaging'
 import { Fragment } from './index'
 
-class Layout extends TinyEmitter {
+class Layout extends Emitter {
   constructor (config = {}, data = undefined) {
     super()
     const defaultConfig = {

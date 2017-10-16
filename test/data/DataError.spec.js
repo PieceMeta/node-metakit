@@ -1,7 +1,9 @@
-const chai = require('chai')
+const
+  helper = require('../helper'),
+  chai = require('chai')
 chai.should()
 
-const DataError = require('../../src/data').DataError
+const DataError = require(helper.requirePath('data')).DataError
 
 describe('data.DataError', () => {
   it('Creates new error instance', () => {

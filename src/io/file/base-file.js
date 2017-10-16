@@ -5,25 +5,34 @@ import mkdirp from 'mkdirp-promise'
 import moment from 'moment'
 import writeFileAtomic from 'write-file-atomic'
 
-const defaultConfig = {
-  encoder: data => Promise.resolve(data),
-  decoder: data => Promise.resolve(data),
-  meta: {},
-  opts: {
-    atomic: true,
-    ext: undefined
-  }
-}
+const
+  _config = new WeakMap(),
+  _meta = new WeakMap()
 
 class BaseFile extends TinyEmitter {
   constructor (config = {}) {
     super()
+
+    const defaultConfig = {
+      encoder: data => {
+        return Promise.resolve(data)
+      },
+      decoder: data => {
+        return Promise.resolve(data)
+      },
+      meta: {},
+      opts: {
+        atomic: true,
+        ext: undefined
+      }
+    }
+
     this._config = Object.assign({}, defaultConfig)
     this._config = Object.assign(this._config, config)
     this._data = undefined
   }
 
-  load (filepath) {
+  static load (filepath) {
     const _ctx = this
     return fs.readFile(path.resolve(filepath))
       .then(data => _ctx._config.decoder(_ctx))
@@ -31,13 +40,17 @@ class BaseFile extends TinyEmitter {
         throw err
       })
   }
-
   save (filepath, createPath = true) {
     const _ctx = this
     filepath = path.resolve(filepath)
     Promise.resolve()
       .then(() => {
-        if (createPath === true) return mkdirp(path.dirname(filepath))
+        if (createPath === true) {
+          return mkdirp(filepath)
+            .catch(err => {
+              console.log(err)
+            })
+        }
       })
       .then(() => {
         const fp = filepath
@@ -59,8 +72,17 @@ class BaseFile extends TinyEmitter {
       })
   }
 
+  get config () {
+    return this._config
+  }
+  set config (val) {
+    this._config = val
+  }
   get data () {
     return this._data
+  }
+  set data (val) {
+    this._data = val
   }
   get meta () {
     return this._config.meta

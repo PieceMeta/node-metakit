@@ -1,8 +1,11 @@
 import assert from 'assert'
 import Big from 'big.js'
 
-class CompressFPS {
+import BaseProcessor from './base-processor'
+
+class CompressFPS extends BaseProcessor {
   constructor () {
+    super()
     this._data = undefined
     this._count = undefined
     this._fps = undefined

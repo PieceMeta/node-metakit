@@ -14,6 +14,10 @@ var _bluebird = require('bluebird');
 
 var _bluebird2 = _interopRequireDefault(_bluebird);
 
+var _v = require('uuid/v4');
+
+var _v2 = _interopRequireDefault(_v);
+
 var _index = require('../index');
 
 var _file = require('../../io/file');
@@ -24,14 +28,16 @@ var _view2 = _interopRequireDefault(_view);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+const defaultConfig = {
+  views: []
+};
+
 class Package extends _file.JSONFile {
-  constructor(filepath = undefined, config = {}) {
+  constructor(filepath = null, config = {}) {
     super(filepath);
+    this._id = (0, _v2.default)();
     this._dirty = false;
-    this._filepath = filepath;
-    this._config = Object.assign(this._config, {
-      views: []
-    });
+    this._config = Object.assign(super.config || {}, defaultConfig);
     this._config = Object.assign(this._config, config);
   }
 
@@ -53,6 +59,9 @@ class Package extends _file.JSONFile {
     });
   }
 
+  get id() {
+    return this._id;
+  }
   get meta() {
     return this._config.meta;
   }
@@ -63,6 +72,9 @@ class Package extends _file.JSONFile {
   }
   get views() {
     return this._config.views;
+  }
+  get isDirty() {
+    return this._dirty === true;
   }
 
   toJSON() {
@@ -76,31 +88,20 @@ class Package extends _file.JSONFile {
     return this.toJSON();
   }
 
-  store(filepath) {
+  static load(filepath) {
+    _assert2.default.equal(typeof filepath, 'string');
+    return super.load(_path2.default.join(filepath, 'index.json')).then(config => {
+      return new Package(filepath, config);
+    });
+  }
+  save(filepath) {
     const _ctx = this;
-    return _bluebird2.default.resolve().then(() => {
-      return mkdirp(filepath).catch(err => {
-        if (err.code !== 'EEXIST') throw err;
-      });
-    }).then(() => {
-      return _file.JSONFile.save(_path2.default.join(filepath, 'index.json'), this.toJSON()).then(() => {
-        return _bluebird2.default.each(_ctx.views, view => {
-          return view.store(_ctx._filepath);
-        });
-      });
+    return super.save(_path2.default.join(filepath, 'index.json'), true).then(() => {
+      return _bluebird2.default.each(_ctx.views, view => view.store(filepath));
     });
   }
   close() {
     return _bluebird2.default.each(this.views, view => view.close());
-  }
-
-  static fromFile(filepath) {
-    return Package.load(filepath).then(config => new Package(filepath, config)).then(pkg => {
-      return _bluebird2.default.map(pkg.views, id => _view2.default.fromFile(_path2.default.join(filepath, `${id}.json`))).then(views => {
-        pkg._config.views = views;
-        return pkg;
-      });
-    });
   }
 }
 

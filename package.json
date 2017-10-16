@@ -6,7 +6,7 @@
   "scripts": {
     "build": "cross-env NODE_ENV=production babel --copy-files -d dist src",
     "watch": "cross-env NODE_ENV=dev babel --copy-files --watch -d dist src",
-    "test": "cross-env NODE_ENV=production mocha $(find test -path '*.spec.*') --require babel-core/register --recursive --no-timeouts"
+    "test": "cross-env NODE_ENV=production mocha --require babel-core/register --recursive --no-timeouts $(find test -path '*.spec.*')"
   },
   "repository": {
     "type": "git",
@@ -18,7 +18,7 @@
     "url": "https://github.com/PieceMeta/node-metakit/issues"
   },
   "engines": {
-    "node": ">= 8.7.0",
+    "node": ">= 8.4.0",
     "npm": ">= 5.3.0"
   },
   "bin": {

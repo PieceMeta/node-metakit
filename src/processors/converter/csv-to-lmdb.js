@@ -1,14 +1,14 @@
 import 'colors'
-import Emitter from 'tiny-emitter'
 import path from 'path'
 
-import Double from '../data/types/double'
+import Emitter from '../../messaging/base-emitter'
+import Double from '../../data/types/double'
 
-import { util, types } from '../data'
-import { CSV, LMDB } from '../io/file'
-import { Stats } from '../services'
+import { util, types } from '../../data/index'
+import { CSV, LMDB } from '../../io/file/index'
+import { Stats } from '../../services/index'
 
-const csvToLMDB = function (infile, outdir, options = {}, statusHandler = undefined, endHandler = undefined) {
+const CSVToLMDB = function (infile, outdir, options = {}, statusHandler = undefined, endHandler = undefined) {
   process.stdout.write(`\nCSV 2 LMDB ${new Array(61).fill('-').join('')}\n\n`.cyan)
   options = Object.assign({
     flushEvery: 10000,
@@ -22,7 +22,8 @@ const csvToLMDB = function (infile, outdir, options = {}, statusHandler = undefi
       signPrefix: true
     }
   }, options)
-  const emitter = new Emitter(),
+  const
+    emitter = new Emitter(),
     stats = new Stats()
   if (typeof statusHandler === 'function') {
     emitter.on('status', statusHandler)
@@ -114,4 +115,4 @@ const csvToLMDB = function (infile, outdir, options = {}, statusHandler = undefi
   })
 }
 
-export default csvToLMDB
+export default CSVToLMDB

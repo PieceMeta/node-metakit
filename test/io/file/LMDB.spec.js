@@ -1,12 +1,14 @@
-const chai = require('chai'),
+const
+  helper = require('../../helper'),
+  chai = require('chai'),
   path = require('path'),
   chance = new (require('chance'))(),
   uuidValidator = require('uuid-validate')
 chai.should()
 
-const LMDB = require('../../../src/io/file').LMDB,
-  TypedBufferView = require('../../../src/data/structure').TypedBufferView,
-  data = require('../../../src/data')
+const LMDB = require(helper.requirePath('io/file')).LMDB,
+  TypedBufferView = require(helper.requirePath('data/structure')).TypedBufferView,
+  data = require(helper.requirePath('data'))
 
 const config = {
   filepath: path.resolve(`/var/tmp/mtk-testlmdb-${chance.word({syllables: 3})}`),

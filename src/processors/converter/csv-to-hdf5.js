@@ -1,21 +1,22 @@
 import 'colors'
-import Emitter from 'tiny-emitter'
 import path from 'path'
 
-import Double from '../data/types/double'
+import BaseEmitter from '../../messaging/base-emitter'
+import Double from '../../data/types/double'
 
-import { util, types } from '../data'
-import { CSV, HDF5 } from '../io/file'
-import { Stats } from '../services'
+import { util, types } from '../../data'
+import { CSV, HDF5 } from '../../io/file'
+import { Stats } from '../../services'
 
-const csvToHDF5 = function (infile, outdir, options = {}, statusHandler = undefined, endHandler = undefined) {
+const CSVToHDF5 = function (infile, outdir, options = {}, statusHandler = undefined, endHandler = undefined) {
   process.stdout.write(`\nCSV 2 HDF5 ${new Array(61).fill('-').join('')}\n\n`.cyan)
   options = Object.assign({
     flushEvery: 10000,
     dataStart: 0,
     type: HDF5.TYPES.FLOAT64
   }, options)
-  const emitter = new Emitter(),
+  const
+    emitter = new BaseEmitter(),
     stats = new Stats()
   if (typeof statusHandler === 'function') {
     emitter.on('status', statusHandler)
@@ -95,4 +96,4 @@ const csvToHDF5 = function (infile, outdir, options = {}, statusHandler = undefi
   })
 }
 
-export default csvToHDF5
+export default CSVToHDF5

@@ -1,20 +1,23 @@
 import assert from 'assert'
 import path from 'path'
 import Promise from 'bluebird'
+import uuid4 from 'uuid/v4'
 
 import { DataError } from '../index'
 import { JSONFile } from '../../io/file'
 
 import View from './view'
 
+const defaultConfig = {
+  views: []
+}
+
 class Package extends JSONFile {
-  constructor (filepath = undefined, config = {}) {
+  constructor (filepath = null, config = {}) {
     super(filepath)
+    this._id = uuid4()
     this._dirty = false
-    this._filepath = filepath
-    this._config = Object.assign(this._config, {
-      views: []
-    })
+    this._config = Object.assign(super.config || {}, defaultConfig)
     this._config = Object.assign(this._config, config)
   }
 
@@ -38,6 +41,9 @@ class Package extends JSONFile {
     })
   }
 
+  get id () {
+    return this._id
+  }
   get meta () {
     return this._config.meta
   }
@@ -49,6 +55,9 @@ class Package extends JSONFile {
   get views () {
     return this._config.views
   }
+  get isDirty () {
+    return this._dirty === true
+  }
 
   toJSON () {
     const conf = Object.assign({}, this._config)
@@ -59,33 +68,22 @@ class Package extends JSONFile {
     return this.toJSON()
   }
 
-  store (filepath) {
+  static load (filepath) {
+    assert.equal(typeof filepath, 'string')
+    return super.load(path.join(filepath, 'index.json'))
+      .then(config => {
+        return new Package(filepath, config)
+      })
+  }
+  save (filepath) {
     const _ctx = this
-    return Promise.resolve().then(() => {
-      return mkdirp(filepath).catch(err => { if (err.code !== 'EEXIST') throw err })
-    }).then(() => {
-      return JSONFile.save(path.join(filepath, 'index.json'), this.toJSON())
-        .then(() => {
-          return Promise.each(_ctx.views, view => {
-            return view.store(_ctx._filepath)
-          })
-        })
-    })
+    return super.save(path.join(filepath, 'index.json'), true)
+      .then(() => {
+        return Promise.each(_ctx.views, view => view.store(filepath))
+      })
   }
   close () {
     return Promise.each(this.views, view => view.close())
-  }
-
-  static fromFile (filepath) {
-    return Package.load(filepath)
-      .then(config => new Package(filepath, config))
-      .then(pkg => {
-        return Promise.map(pkg.views, id => View.fromFile(path.join(filepath, `${id}.json`)))
-          .then(views => {
-            pkg._config.views = views
-            return pkg
-          })
-      })
   }
 }
 

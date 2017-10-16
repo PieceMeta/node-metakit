@@ -1,15 +1,15 @@
 'use strict';
 
-const convert = require('./convert'),
-      data = require('./data'),
+const data = require('./data'),
       io = require('./io'),
+      messaging = require('./messaging'),
       processors = require('./processors'),
       services = require('./services');
 
 module.exports = {
-  convert,
   data,
   io,
+  messaging,
   processors,
   services
 };

@@ -1,10 +1,12 @@
-const chai = require('chai'),
+const
+  helper = require('../../helper'),
+  chai = require('chai'),
   uuidValidate = require('uuid-validate')
 chai.should()
 
 const Chance = require('chance'),
   chance = new Chance(),
-  View = require('../../../src/data/structure/index').View
+  View = require(helper.requirePath('data/structure')).View
 
 describe('data.structure.View', () => {
   it('Creates and inits new empty data View', () => {

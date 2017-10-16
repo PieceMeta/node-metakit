@@ -1,7 +1,9 @@
-const chai = require('chai')
+const
+  helper = require('../../helper'),
+  chai = require('chai')
 chai.should()
 
-const types = require('../../../src/data/types/index')
+const types = require(helper.requirePath('data/types'))
 
 describe('data.types.Double', () => {
   it('Creates a Double (single value) instance from a string value', () => {

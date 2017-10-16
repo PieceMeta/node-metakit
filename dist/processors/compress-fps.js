@@ -10,10 +10,15 @@ var _big = require('big.js');
 
 var _big2 = _interopRequireDefault(_big);
 
+var _baseProcessor = require('./base-processor');
+
+var _baseProcessor2 = _interopRequireDefault(_baseProcessor);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-class CompressFPS {
+class CompressFPS extends _baseProcessor2.default {
   constructor() {
+    super();
     this._data = undefined;
     this._count = undefined;
     this._fps = undefined;

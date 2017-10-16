@@ -4,33 +4,33 @@ exports.__esModule = true;
 
 require('colors');
 
-var _tinyEmitter = require('tiny-emitter');
-
-var _tinyEmitter2 = _interopRequireDefault(_tinyEmitter);
-
 var _path = require('path');
 
 var _path2 = _interopRequireDefault(_path);
 
-var _double = require('../data/types/double');
+var _baseEmitter = require('../../messaging/base-emitter');
+
+var _baseEmitter2 = _interopRequireDefault(_baseEmitter);
+
+var _double = require('../../data/types/double');
 
 var _double2 = _interopRequireDefault(_double);
 
-var _data = require('../data');
+var _index = require('../../data/index');
 
-var _file = require('../io/file');
+var _index2 = require('../../io/file/index');
 
-var _services = require('../services');
+var _index3 = require('../../services/index');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-const csvToLMDB = function (infile, outdir, options = {}, statusHandler = undefined, endHandler = undefined) {
+const CSVToLMDB = function (infile, outdir, options = {}, statusHandler = undefined, endHandler = undefined) {
   process.stdout.write(`\nCSV 2 LMDB ${new Array(61).fill('-').join('')}\n\n`.cyan);
   options = Object.assign({
     flushEvery: 10000,
     dataStart: 0,
     keyColumn: 0,
-    type: _file.LMDB.TYPES.FLOAT64,
+    type: _index2.LMDB.TYPES.FLOAT64,
     key: {
       column: 0,
       length: 16,
@@ -38,8 +38,8 @@ const csvToLMDB = function (infile, outdir, options = {}, statusHandler = undefi
       signPrefix: true
     }
   }, options);
-  const emitter = new _tinyEmitter2.default(),
-        stats = new _services.Stats();
+  const emitter = new _baseEmitter2.default(),
+        stats = new _index3.Stats();
   if (typeof statusHandler === 'function') {
     emitter.on('status', statusHandler);
   }
@@ -51,7 +51,7 @@ const csvToLMDB = function (infile, outdir, options = {}, statusHandler = undefi
         basename,
         dbUUID,
         txn;
-    const lmdb = new _file.LMDB(),
+    const lmdb = new _index2.LMDB(),
           meta = {
       type: options.type,
       key: options.key
@@ -61,7 +61,7 @@ const csvToLMDB = function (infile, outdir, options = {}, statusHandler = undefi
       if (row >= options.dataStart) {
         const parsedKey = new _double2.default(data[options.key.column]);
         if (typeof parsedKey !== 'number') return row++;
-        const key = _data.util.keyFromDouble(parsedKey === null ? 0 : parsedKey, options.key.length, options.key.precision, options.key.signPrefix);
+        const key = _index.util.keyFromDouble(parsedKey === null ? 0 : parsedKey, options.key.length, options.key.precision, options.key.signPrefix);
         let values,
             hasError = false;
         switch (options.type) {
@@ -75,7 +75,7 @@ const csvToLMDB = function (infile, outdir, options = {}, statusHandler = undefi
             break
             */
           default:
-            values = _data.types.make(_data.types.MKT_DOUBLE_ARRAY, data.map(val => {
+            values = _index.types.make(_index.types.MKT_DOUBLE_ARRAY, data.map(val => {
               const parsed = new _double2.default(val);
               hasError = hasError || parsed === null;
               return hasError ? 0.0 : parsed;
@@ -89,7 +89,7 @@ const csvToLMDB = function (infile, outdir, options = {}, statusHandler = undefi
         }
         if (stats.entries % options.flushEvery === 0) {
           lmdb.endTxn(txn);
-          emitter.emit('status', _data.util.padString(`Parsed ${stats.entries} rows...`, 32));
+          emitter.emit('status', _index.util.padString(`Parsed ${stats.entries} rows...`, 32));
           txn = lmdb.beginTxn();
         }
       } else {
@@ -106,7 +106,7 @@ const csvToLMDB = function (infile, outdir, options = {}, statusHandler = undefi
           meta.title = basename;
           dbUUID = lmdb.createDb(meta);
           txn = lmdb.beginTxn();
-          emitter.emit('status', _data.util.padString('Parsing rows... ', 32));
+          emitter.emit('status', _index.util.padString('Parsing rows... ', 32));
         }
       }
       row++;
@@ -123,8 +123,8 @@ const csvToLMDB = function (infile, outdir, options = {}, statusHandler = undefi
       resolve(stats);
     };
 
-    _file.CSV.parseFile(infile, onData, onEnd);
+    _index2.CSV.parseFile(infile, onData, onEnd);
   });
 };
 
-exports.default = csvToLMDB;
+exports.default = CSVToLMDB;

@@ -26,6 +26,8 @@ var _assert = require('assert');
 
 var _assert2 = _interopRequireDefault(_assert);
 
+var _messaging = require('../../messaging');
+
 var _index = require('../index');
 
 var _index2 = require('./index');
@@ -34,8 +36,9 @@ var _file = require('../../io/file');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-class View {
+class View extends _messaging.Emitter {
   constructor(config = {}, basepath = undefined) {
+    super();
     this._dirty = false;
     this._db = undefined;
     this._basepath = basepath;

@@ -1,11 +1,13 @@
-const chai = require('chai'),
+const
+  helper = require('../../helper'),
+  chai = require('chai'),
   path = require('path'),
   uuidValidate = require('uuid-validate')
 chai.should()
 
 const Chance = require('chance'),
   chance = new Chance(),
-  Package = require('../../../src/data/structure').Package
+  Package = require(helper.requirePath('data/structure')).Package
 
 const config = {
   meta: {
@@ -14,25 +16,24 @@ const config = {
   }
 }
 
-let pkg, filepath
+let pkg, loadedPkg, filepath
 
 describe('data.structure.Package', () => {
   it('Creates new empty data Package', () => {
-    filepath = path.resolve(`/var/tmp/mtk-testpkg-${chance.word({syllables: 3})}`)
+    filepath = path.resolve(`/tmp/mtkpkg-${chance.word({syllables: 3})}`)
     pkg = new Package(filepath, config)
     pkg.should.be.instanceOf(Package)
-    pkg._filepath.should.equal(filepath)
-    pkg._config.meta.should.deep.equal(config.meta)
-    uuidValidate(pkg._config.id, 4).should.equal(true)
-    pkg._dirty.should.equal(false)
+    pkg.meta.should.deep.equal(config.meta)
+    uuidValidate(pkg.id, 4).should.equal(true)
+    pkg.isDirty.should.equal(false)
   })
-  it('Stores a package config as JSON file', () => {
-    return pkg.store(path.join(filepath, 'index.json'))
+  it('Stores a package config as a collection of JSON files', () => {
+    return pkg.save(filepath)
   })
-  it('Loads package config from JSON file', () => {
-    return Package.fromFile(path.join(filepath, 'index.json'))
-      .then(loadedPkg => {
-        pkg.should.contain(loadedPkg)
+  it('Loads package config from JSON files', () => {
+    return Package.load(path.dirname(filepath))
+      .then(data => {
+        loadedPkg.should.contain(data)
       })
   })
 })

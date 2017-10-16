@@ -1,12 +1,12 @@
-import TinyEmitter from 'tiny-emitter'
 import assert from 'assert'
 
 import { DataError } from '../index'
+import { Emitter } from '../../messaging'
 
 import * as types from '../types'
 import * as util from '../util'
 
-class Fragment extends TinyEmitter {
+class Fragment extends Emitter {
   constructor (config = {}) {
     super()
 

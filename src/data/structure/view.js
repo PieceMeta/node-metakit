@@ -5,12 +5,14 @@ import fs from 'mz/fs'
 import path from 'path'
 import assert from 'assert'
 
+import { Emitter } from '../../messaging'
 import { DataError } from '../index'
 import { Layout } from './index'
 import { LMDB, JSONFile } from '../../io/file'
 
-class View {
+class View extends Emitter {
   constructor (config = {}, basepath = undefined) {
+    super()
     this._dirty = false
     this._db = undefined
     this._basepath = basepath
