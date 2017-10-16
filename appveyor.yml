@@ -1,0 +1,17 @@
+image: Visual Studio 2017
+environment:
+  nodejs_version: "8.7"
+
+install:
+  - ps: Install-Product node $env:nodejs_version
+  - npm install
+
+test_script:
+  - node --version
+  - npm --version
+  # transpile
+  - npm run build
+  # test
+  - npm test
+
+build: off
