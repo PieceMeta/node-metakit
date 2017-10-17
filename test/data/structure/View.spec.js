@@ -16,8 +16,7 @@ describe('data.structure.View', () => {
         foo: 'bar'
       }
     }
-    return new View(config)
-      .init()
+    return new View(config).init()
       .then(view => {
         view.should.be.instanceOf(View)
         view._config.meta.should.deep.equal(config.meta)

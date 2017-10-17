@@ -16,7 +16,7 @@ const config = {
   }
 }
 
-let pkg, loadedPkg, filepath
+let pkg, filepath
 
 describe('data.structure.Package', () => {
   it('Creates new empty data Package', () => {
@@ -31,9 +31,10 @@ describe('data.structure.Package', () => {
     return pkg.save(filepath)
   })
   it('Loads package config from JSON files', () => {
-    return Package.load(path.dirname(filepath))
+    return Package.load(path.join(__dirname, '..', '..', '_fixtures', 'testpkg'))
       .then(data => {
-        loadedPkg.should.contain(data)
+        data.should.be.instanceOf(Package)
+        data.id.should.equal('072c7acf-9513-463d-baf5-29cdce0d92e7')
       })
   })
 })

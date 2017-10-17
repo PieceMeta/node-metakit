@@ -34,7 +34,7 @@ class View extends Emitter {
 
   init (layoutPath = undefined, create = false) {
     const _view = this
-    Promise.resolve()
+    return Promise.resolve()
       .then(() => {
         if (typeof layoutPath !== 'string' || create === true) return new Layout()
         return Layout.fromFile(layoutPath)

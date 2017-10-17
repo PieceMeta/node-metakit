@@ -1,5 +1,6 @@
 import slug from 'slug'
 import uuid4 from 'uuid/v4'
+import Promise from 'bluebird'
 
 import { Emitter } from '../../messaging'
 import { Fragment } from './index'
@@ -22,7 +23,7 @@ class Layout extends Emitter {
       this._config.id = this.id
       if (this.hasStorage === true) dbId = this._db.createDb(this.id, false)
       else dbId = uuid4()
-      this.config.dbs[dbId] = {
+      this._config.dbs[dbId] = {
         type: 'LMDB',
         id: dbId,
         config: {}
@@ -38,7 +39,7 @@ class Layout extends Emitter {
 
   configureLayoutChildren (data, parentPath = '') {
     const _ctx = this
-    return Promise.each(_ctx.config.fragments, fragment => {
+    return Promise.each(_ctx._config.fragments, fragment => {
       fragment.slug = slug(fragment.title || fragment.id)
       let currentPath = `${parentPath}/${fragment.slug}`
       _ctx.config.paths[currentPath] = fragment.id

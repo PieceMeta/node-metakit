@@ -1,12 +1,12 @@
 import assert from 'assert'
 
 import TinyEmitter from 'tiny-emitter'
-import BaseEvent from 'base-event'
+import BaseEvent from './base-event'
 
 const _symEmitterConfig = Symbol('EmitterConfig')
 
 class BaseEmitter extends TinyEmitter {
-  constructor (defaultType = BaseEmitter.types.MKT_EVENT, emitterId = 'base-emitter') {
+  constructor (defaultType = BaseEvent.types.MKT_EVENT, emitterId = 'base-emitter') {
     super()
     this[_symEmitterConfig] = { defaultType, emitterId }
   }
@@ -19,7 +19,7 @@ class BaseEmitter extends TinyEmitter {
     super.emit(evt.type, evt)
   }
 
-  configureEmitter (defaultType = BaseEmitter.types.MKT_EVENT, emitterId = 'base-emitter') {
+  configureEmitter (defaultType = BaseEvent.types.MKT_EVENT, emitterId = 'base-emitter') {
     this[_symEmitterConfig].defaultType = defaultType
   }
 

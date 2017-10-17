@@ -4,22 +4,13 @@ import fs from 'mz/fs'
 import mkdirp from 'mkdirp-promise'
 import moment from 'moment'
 import writeFileAtomic from 'write-file-atomic'
-
-const
-  _config = new WeakMap(),
-  _meta = new WeakMap()
+import Promise from 'bluebird'
 
 class BaseFile extends TinyEmitter {
   constructor (config = {}) {
     super()
 
     const defaultConfig = {
-      encoder: data => {
-        return Promise.resolve(data)
-      },
-      decoder: data => {
-        return Promise.resolve(data)
-      },
       meta: {},
       opts: {
         atomic: true,
@@ -28,25 +19,28 @@ class BaseFile extends TinyEmitter {
     }
 
     this._config = Object.assign({}, defaultConfig)
-    this._config = Object.assign(this._config, config)
+    if (typeof config === 'object') this._config = Object.assign(this._config, config)
     this._data = undefined
   }
 
   static load (filepath) {
     const _ctx = this
     return fs.readFile(path.resolve(filepath))
-      .then(data => _ctx._config.decoder(_ctx))
+      .then(data => {
+        return _ctx._decoder(data)
+      })
       .catch(err => {
         throw err
       })
   }
+
   save (filepath, createPath = true) {
     const _ctx = this
     filepath = path.resolve(filepath)
     Promise.resolve()
       .then(() => {
         if (createPath === true) {
-          return mkdirp(filepath)
+          return mkdirp(path.dirname(filepath))
             .catch(err => {
               console.log(err)
             })
@@ -65,11 +59,21 @@ class BaseFile extends TinyEmitter {
 
         return _ctx
       })
-      .then(data => _ctx._config.encoder(data))
-      .then(data => writeFileAtomic(filepath, data))
+      .then(data => _ctx._encoder(data))
+      .then(data => {
+        return Promise.promisify(writeFileAtomic)(filepath, data, {})
+      })
       .catch(err => {
         throw err
       })
+  }
+
+  static _decoder (data) {
+    return Promise.resolve(data)
+  }
+
+  _encoder (data) {
+    return Promise.resolve(data)
   }
 
   get config () {

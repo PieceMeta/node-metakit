@@ -9,16 +9,17 @@ import { JSONFile } from '../../io/file'
 import View from './view'
 
 const defaultConfig = {
+  id: undefined,
   views: []
 }
 
 class Package extends JSONFile {
   constructor (filepath = null, config = {}) {
     super(filepath)
-    this._id = uuid4()
     this._dirty = false
     this._config = Object.assign(super.config || {}, defaultConfig)
     this._config = Object.assign(this._config, config)
+    if (!this._config.id) this._config.id = uuid4()
   }
 
   addView (layout) {
@@ -42,7 +43,7 @@ class Package extends JSONFile {
   }
 
   get id () {
-    return this._id
+    return this._config.id
   }
   get meta () {
     return this._config.meta
