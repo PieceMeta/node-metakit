@@ -5,7 +5,7 @@ import Emitter from '../../messaging/base-emitter'
 import Double from '../../data/types/double'
 
 import { util, types } from '../../data/index'
-import { CSV, LMDB } from '../../io/file/index'
+import { CSVFile, LMDB } from '../../io/file/index'
 import { Stats } from '../../services/index'
 
 const CSVToLMDB = function (infile, outdir, options = {}, statusHandler = undefined, endHandler = undefined) {
@@ -111,7 +111,7 @@ const CSVToLMDB = function (infile, outdir, options = {}, statusHandler = undefi
         resolve(stats)
       }
 
-    CSV.parseFile(infile, onData, onEnd)
+    CSVFile.parseFile(infile, onData, onEnd)
   })
 }
 

@@ -4,12 +4,12 @@ const
   path = require('path')
 chai.should()
 
-const CSV = require(helper.requirePath('io/file')).CSV
+const CSVFile = require(helper.requirePath('io/file')).CSVFile
 
-describe('io.file.CSV', () => {
-  it('Parses CSV file from path', () => {
+describe('io.file.CSVFile', () => {
+  it('Parses CSVFile file from path', () => {
     const entries = []
-    CSV.parseFile(
+    CSVFile.parseFile(
       path.join(__dirname, '..', '_fixtures', 'test.csv'),
       data => {
         entries.push(data)

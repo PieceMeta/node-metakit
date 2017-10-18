@@ -7,7 +7,7 @@ import writeFileAtomic from 'write-file-atomic'
 import Promise from 'bluebird'
 
 class BaseFile extends TinyEmitter {
-  constructor (config = {}) {
+  constructor (config = {}, data = undefined) {
     super()
 
     const defaultConfig = {
@@ -20,24 +20,21 @@ class BaseFile extends TinyEmitter {
 
     this._config = Object.assign({}, defaultConfig)
     if (typeof config === 'object') this._config = Object.assign(this._config, config)
-    this._data = undefined
+    this._data = data
   }
 
-  static load (filepath) {
+  load (filepath) {
     const _ctx = this
     return fs.readFile(path.resolve(filepath))
-      .then(data => {
-        return _ctx._decoder(data)
-      })
-      .catch(err => {
-        throw err
-      })
+      .then(data => _ctx._decoder(data))
+      .then(data => Object.assign(_ctx, data))
+      .catch(err => { throw err })
   }
 
   save (filepath, createPath = true) {
     const _ctx = this
     filepath = path.resolve(filepath)
-    Promise.resolve()
+    return Promise.resolve()
       .then(() => {
         if (createPath === true) {
           return mkdirp(path.dirname(filepath))
@@ -59,7 +56,7 @@ class BaseFile extends TinyEmitter {
 
         return _ctx
       })
-      .then(data => _ctx._encoder(data))
+      .then(data => _ctx._encoder(_ctx))
       .then(data => {
         return Promise.promisify(writeFileAtomic)(filepath, data, {})
       })
@@ -68,7 +65,7 @@ class BaseFile extends TinyEmitter {
       })
   }
 
-  static _decoder (data) {
+  _decoder (data) {
     return Promise.resolve(data)
   }
 
@@ -90,6 +87,9 @@ class BaseFile extends TinyEmitter {
   }
   get meta () {
     return this._config.meta
+  }
+  set meta (val) {
+    this._config.meta = val
   }
 }
 

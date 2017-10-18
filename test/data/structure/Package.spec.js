@@ -31,10 +31,11 @@ describe('data.structure.Package', () => {
     return pkg.save(filepath)
   })
   it('Loads package config from JSON files', () => {
-    return Package.load(path.join(__dirname, '..', '..', '_fixtures', 'testpkg'))
-      .then(data => {
-        data.should.be.instanceOf(Package)
-        data.id.should.equal('072c7acf-9513-463d-baf5-29cdce0d92e7')
+    pkg = new Package()
+    return pkg.load(path.join(__dirname, '..', '..', '_fixtures', 'testpkg'))
+      .then(() => {
+        pkg.should.be.instanceOf(Package)
+        pkg.id.should.equal('072c7acf-9513-463d-baf5-29cdce0d92e7')
       })
   })
 })

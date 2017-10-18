@@ -1010,6 +1010,12 @@
       "resolved": "https://registry.npmjs.org/builtin-modules/-/builtin-modules-1.1.1.tgz",
       "integrity": "sha1-Jw8HbFpywC9bZaR9+Uxf46J4iS8="
     },
+    "bvh": {
+      "version": "git+https://github.com/hitsujiwool/bvh.git#6e4d3fdfed719127aa06cb6696c5842a0d15db08",
+      "requires": {
+        "xmlhttprequest": "1.8.0"
+      }
+    },
     "caller-path": {
       "version": "0.1.0",
       "resolved": "https://registry.npmjs.org/caller-path/-/caller-path-0.1.0.tgz",

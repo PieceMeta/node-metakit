@@ -2,10 +2,10 @@ import assert from 'assert'
 import csv from 'fast-csv'
 import fs from 'fs'
 
-class CSV {
+class CSVFile {
   static parseFile (filename, dataCallback, endCallback) {
-    const stream = CSV.getStream(filename)
-    CSV.parseStream(stream, dataCallback, endCallback)
+    const stream = CSVFile.getStream(filename)
+    CSVFile.parseStream(stream, dataCallback, endCallback)
   }
   static parseStream (stream, dataCallback, endCallback) {
     assert.ok(stream instanceof fs.ReadStream)
@@ -30,4 +30,4 @@ class CSV {
   }
 }
 
-export default CSV
+export default CSVFile

@@ -45,6 +45,9 @@ class Package extends JSONFile {
   get id () {
     return this._config.id
   }
+  set id (val) {
+    this._config.id = val
+  }
   get meta () {
     return this._config.meta
   }
@@ -56,8 +59,14 @@ class Package extends JSONFile {
   get views () {
     return this._config.views
   }
+  set views (val) {
+    this._config.views = val
+  }
   get isDirty () {
     return this._dirty === true
+  }
+  set isDirty (val) {
+    this._dirty = val
   }
 
   toJSON () {
@@ -69,7 +78,7 @@ class Package extends JSONFile {
     return this.toJSON()
   }
 
-  static load (filepath) {
+  load (filepath) {
     assert.equal(typeof filepath, 'string')
     return super.load(path.join(filepath, 'index.json'))
       .then(config => {

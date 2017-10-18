@@ -5,7 +5,7 @@ import BaseEmitter from '../../messaging/base-emitter'
 import Double from '../../data/types/double'
 
 import { util, types } from '../../data'
-import { CSV, HDF5 } from '../../io/file'
+import { CSVFile, HDF5 } from '../../io/file'
 import { Stats } from '../../services'
 
 const CSVToHDF5 = function (infile, outdir, options = {}, statusHandler = undefined, endHandler = undefined) {
@@ -92,7 +92,7 @@ const CSVToHDF5 = function (infile, outdir, options = {}, statusHandler = undefi
         resolve(stats)
       }
 
-    CSV.parseFile(infile, onData, onEnd)
+    CSVFile.parseFile(infile, onData, onEnd)
   })
 }
 
