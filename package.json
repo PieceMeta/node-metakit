@@ -6,7 +6,7 @@
   "scripts": {
     "build": "cross-env NODE_ENV=production babel --copy-files -d dist src",
     "watch": "cross-env NODE_ENV=dev babel --copy-files --watch -d dist src",
-    "test": "cross-env NODE_ENV=production mocha --require babel-core/register --recursive --no-timeouts $(find test -path '*.spec.*')"
+    "test": "cross-env NODE_ENV=production mocha --require babel-core/register --timeout=10000 'test/**/*.spec.js'"
   },
   "repository": {
     "type": "git",
@@ -36,6 +36,7 @@
     "fast-csv": "^2.4.1",
     "fs-extra": "^4.0.2",
     "microtime": "^2.1.6",
+    "mkdirp-promise": "^5.0.1",
     "moment": "^2.19.1",
     "mz": "^2.7.0",
     "nanotimer": "^0.3.15",
