@@ -8,12 +8,13 @@ const
 
 chai.should()
 
-let server
+let server, port
 
 describe('io.net.WebSocket', () => {
   before(() => {
+    port = 4000 + chance.integer({min: 1, max: 1000})
     return new Promise(resolve => {
-      server = new WebSocket(3333)
+      server = new WebSocket(port)
       resolve()
     })
   })
@@ -35,7 +36,7 @@ describe('io.net.WebSocket', () => {
             resolve()
           })
       })
-      const client = new WebSocketClient('ws://localhost:3333')
+      const client = new WebSocketClient(`ws://localhost:${port}`)
       client.on('open', () => {
         client.send(msg)
       })

@@ -5,14 +5,12 @@ import Promise from 'bluebird'
 
 import { Emitter, BaseEvent } from '../../messaging'
 
-const WebSocketServer = uws.Server
-
 class WebSocket extends Emitter {
   constructor (port) {
     super()
     assert.equal(typeof port, 'number')
     const _ctx = this
-    this._server = new WebSocketServer({ port })
+    this._server = new uws.Server({ port })
     this._connections = {}
     this._server.on('connection', function (ws) {
       const id = uuid()
