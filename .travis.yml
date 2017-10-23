@@ -5,14 +5,6 @@ matrix:
       dist: trusty
       sudo: required
       env: CC=gcc-4.9 && CXX=g++-4.9
-    # macOS 10.10
-    - os: osx
-      osx_image: xcode6.4
-      env: CC=clang && CXX="clang++ -stdlib=libc++"
-    # macOS 10.11
-    - os: osx
-      osx_image: xcode7.3
-      env: CC=clang && CXX="clang++ -stdlib=libc++"
     # macOS 10.12
     - os: osx
       osx_image: xcode8.3
@@ -20,10 +12,9 @@ matrix:
     # macOS 10.12
     - os: osx
       osx_image: xcode9.1
-      env: CC=clang && CXX=clang++ && CXXFLAGS="-g -std=c++11 -Wall -pedantic"
 language: node_js
 node_js:
-  - "8"
+  - "8.7"
 before_install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew upgrade; fi
@@ -42,6 +33,7 @@ cache:
   timeout: 900
   directories:
     - $HOME/.cache
+    - /usr/local
     - node_modules
     - lib
     - install
