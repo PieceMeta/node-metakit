@@ -22,7 +22,6 @@ cache:
     - node_modules
 
 matrix:
-  fast_finish: true
   include:
     # Ubuntu 14.04
     - os: linux
@@ -41,10 +40,6 @@ matrix:
             - libblas-dev
             - libopenblas-dev
             - libhdf5-dev
-  allow_failures:
     # macOS 10.12
     - os: osx
       osx_image: xcode8.3
-    # macOS 10.12
-    - os: osx
-      osx_image: xcode9.1
