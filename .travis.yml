@@ -29,6 +29,7 @@ before_script:
 after_script:
   - greenkeeper-lockfile-upload
 script:
+  - npm rebuild
   - npm run build
   - npm test
 cache:
