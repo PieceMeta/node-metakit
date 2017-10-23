@@ -2,4 +2,6 @@
 .idea
 *.log
 node_modules
+lib/**/*
+install/**/*
 !.gitkeep

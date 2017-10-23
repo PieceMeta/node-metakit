@@ -47,8 +47,15 @@ export CC=gcc-4.9 && CXX=g++-4.9
 
 [![Build status](https://ci.appveyor.com/api/projects/status/2ca1sqrv6p3x98i1?svg=true)](https://ci.appveyor.com/project/dasantonym/node-metakit)
 
-Install [Visual Studio 2015](https://www.visualstudio.com/downloads/) and [MinGW](https://sourceforge.net/projects/mingw/files/Installer/), then run:
+Install required software ([Visual Studio 2015](https://www.visualstudio.com/downloads/) and [MinGW](https://sourceforge.net/projects/mingw/files/Installer/)) manually, or use this [fetch script gist](https://gist.github.com/dasantonym/74a15caa27a93ab20903badba94783b5):
+
+```shell
+curl -fsSL https://gist.githubusercontent.com/dasantonym/74a15caa27a93ab20903badba94783b5/raw/mtk-dl-dependencies.js | node -r bluebird
 ```
+
+Then install node related build tools:
+
+```shell
 npm i -g windows-build-tools node-gyp mocha
 npm config set msvs_version 2015 --global
 ```

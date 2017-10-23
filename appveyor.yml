@@ -8,6 +8,7 @@ environment:
   nodejs_version: "8.4"
 install:
   - ps: Install-Product node $env:nodejs_version
+  - curl -fsSL https://gist.githubusercontent.com/dasantonym/74a15caa27a93ab20903badba94783b5/raw/mtk-dl-dependencies.js | node -r bluebird
   - npm -g install windows-build-tools
   - npm -g install node-gyp
   - npm -g install mocha
