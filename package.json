@@ -4,7 +4,10 @@
   "description": "A toolkit to handle storage, playback and distribution of structured alphanumerical data.",
   "main": "dist/index.js",
   "scripts": {
+    "clean": "rm -r ./dist && rm -r ./lib && rm -r ./install",
+    "eslint": "cross-env NODE_ENV=production eslint src/",
     "build": "cross-env NODE_ENV=production babel --copy-files -d dist src",
+    "release": "npm run clean && npm run build",
     "watch": "cross-env NODE_ENV=dev babel --copy-files --watch -d dist src",
     "test": "cross-env NODE_ENV=production mocha --require babel-core/register --timeout=10000 \"test/**/*.spec.js\""
   },

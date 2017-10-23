@@ -1,8 +1,8 @@
 # metakit
 
-A toolkit to handle storage, playback and distribution of structured alphanumerical data. It is written in ES6 JavaScript for use with [Node.js](https://nodejs.org), uses [LMDB](https://en.wikipedia.org/wiki/Lightning_Memory-Mapped_Database) and (soon) [HDF5](https://support.hdfgroup.org/HDF5/) to store data and provides realtime data playback through [OSC](http://opensoundcontrol.org/osc) over various transports, such as UDP, TCP and [WebSocket](https://en.wikipedia.org/wiki/WebSocket).
-
 [![npm version](https://badge.fury.io/js/metakit.svg)](https://badge.fury.io/js/metakit)
+
+A toolkit to handle storage, playback and distribution of structured alphanumerical data. It is written in ES6 JavaScript for use with [Node.js](https://nodejs.org), uses [LMDB](https://en.wikipedia.org/wiki/Lightning_Memory-Mapped_Database) and (soon) [HDF5](https://support.hdfgroup.org/HDF5/) to store data and provides realtime data playback through [OSC](http://opensoundcontrol.org/osc) over various transports, such as UDP, TCP and [WebSocket](https://en.wikipedia.org/wiki/WebSocket).
 
 ## Setup
 
@@ -11,7 +11,7 @@ A toolkit to handle storage, playback and distribution of structured alphanumeri
 * Ubuntu 14.04
 * Windows 8.1
 
-### Install
+### Add to project
 
 ```shell
 npm install --save metakit
@@ -80,8 +80,20 @@ Before rebuild, add the hdf5 module with ``npm i hdf5``, then uncomment the HDF 
 [![Greenkeeper badge](https://badges.greenkeeper.io/PieceMeta/node-metakit.svg)](https://greenkeeper.io/)
 [![Dependency Status](https://gemnasium.com/badges/github.com/PieceMeta/node-metakit.svg)](https://gemnasium.com/github.com/PieceMeta/node-metakit)
 
-### Transpile ES6 source
+Before pushing changes, please make sure to lint the code using ``npm run eslint``.
+
+### Build project
+
+Transpiles ES6 code and copies assets to ``dist``.
 
 ```shell
 npm run build
+```
+
+### Release
+
+Cleans ``dist``, ``lib`` and ``install`` and lints the code before building.
+
+```shell
+npm run release
 ```
