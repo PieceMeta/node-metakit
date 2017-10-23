@@ -6,7 +6,7 @@
   "scripts": {
     "build": "cross-env NODE_ENV=production babel --copy-files -d dist src",
     "watch": "cross-env NODE_ENV=dev babel --copy-files --watch -d dist src",
-    "test": "cross-env NODE_ENV=production mocha --require babel-core/register --timeout=10000 'test/**/*.spec.js'"
+    "test": "cross-env NODE_ENV=production mocha --require babel-core/register --timeout=10000 \"test/**/*.spec.js\""
   },
   "repository": {
     "type": "git",
