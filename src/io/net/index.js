@@ -1,5 +1,7 @@
 import OSC from './osc'
+import WebSocket from './websocket'
 
 export {
-  OSC
+  OSC,
+  WebSocket
 }
