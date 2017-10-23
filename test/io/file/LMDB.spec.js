@@ -23,7 +23,7 @@ const config = {
 let lmdb, dbId, txn, vals = []
 
 describe('io.file.LMDB', () => {
-  it(`Initializes a new LMDB environment with max ${config.max_gb}GB and ${config.max_dbs} DB(s)`, () => {
+  it(`Initializes a new LMDB env at ${config.filepath} w/ ${config.max_gb} GB / ${config.max_dbs} DB(s)`, () => {
     lmdb = new LMDB()
     lmdb.should.be.instanceOf(LMDB)
 
