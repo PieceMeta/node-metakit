@@ -1,4 +1,0 @@
-message Fragment {
-  optional double time = 1;
-  repeated bytes value = 2;
-}

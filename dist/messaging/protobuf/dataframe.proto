@@ -1,0 +1,11 @@
+message DataFrame {
+  message DoubleFragment {
+    repeated double value = 1;
+  }
+  message FloatFragment {
+    repeated float value = 1;
+  }
+  optional double time = 1;
+  repeated DoubleFragment doubles = 2;
+  repeated FloatFragment floats = 3;
+}

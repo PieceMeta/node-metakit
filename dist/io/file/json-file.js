@@ -9,22 +9,27 @@ var _baseFile2 = _interopRequireDefault(_baseFile);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 class JSONFile extends _baseFile2.default {
-  constructor() {
+  constructor(data = undefined) {
     super({
-      encoder: data => JSON.stringify(this, null, '\t'),
-      decoder: JSON.parse,
       opts: {
         atomic: true,
         ext: '.json'
       }
+    }, data);
+  }
+
+  _decoder(data) {
+    return new Promise(resolve => {
+      resolve(JSON.parse(data));
     });
   }
 
-  static load(filepath) {
-    return super.load(filepath);
-  }
-  save(filepath) {
-    return super.save(filepath, true);
+  _encoder(data) {
+    return new Promise(resolve => {
+      resolve(typeof data.toJSON === 'function' ? data.toJSON() : JSON.stringify(data, null, '\t'));
+    }).catch(err => {
+      throw err;
+    });
   }
 }
 

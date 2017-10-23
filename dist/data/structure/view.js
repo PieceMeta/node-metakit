@@ -60,7 +60,7 @@ class View extends _messaging.Emitter {
 
   init(layoutPath = undefined, create = false) {
     const _view = this;
-    _bluebird2.default.resolve().then(() => {
+    return _bluebird2.default.resolve().then(() => {
       if (typeof layoutPath !== 'string' || create === true) return new _index2.Layout();
       return _index2.Layout.fromFile(layoutPath);
     }).then(layout => {

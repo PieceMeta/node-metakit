@@ -10,7 +10,7 @@ var _tinyEmitter = require('tiny-emitter');
 
 var _tinyEmitter2 = _interopRequireDefault(_tinyEmitter);
 
-var _baseEvent = require('base-event');
+var _baseEvent = require('./base-event');
 
 var _baseEvent2 = _interopRequireDefault(_baseEvent);
 
@@ -19,7 +19,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 const _symEmitterConfig = Symbol('EmitterConfig');
 
 class BaseEmitter extends _tinyEmitter2.default {
-  constructor(defaultType = BaseEmitter.types.MKT_EVENT, emitterId = 'base-emitter') {
+  constructor(defaultType = _baseEvent2.default.types.MKT_EVENT, emitterId = 'base-emitter') {
     super();
     this[_symEmitterConfig] = { defaultType, emitterId };
   }
@@ -28,11 +28,11 @@ class BaseEmitter extends _tinyEmitter2.default {
     if (payload) _assert2.default.equal(typeof payload, 'object');
     if (type) _assert2.default.equal(typeof type, 'number');
     if (target) _assert2.default.equal(typeof target, 'object');
-    const evt = _baseEvent2.default.make(payload, type || this[_symEmitterConfig].defaultType, target);
+    const evt = _baseEvent2.default.make(payload, target, type || this[_symEmitterConfig].defaultType);
     super.emit(evt.type, evt);
   }
 
-  configureEmitter(defaultType = BaseEmitter.types.MKT_EVENT, emitterId = 'base-emitter') {
+  configureEmitter(defaultType = _baseEvent2.default.types.MKT_EVENT, emitterId = 'base-emitter') {
     this[_symEmitterConfig].defaultType = defaultType;
   }
 

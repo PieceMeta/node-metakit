@@ -108,7 +108,7 @@ const CSVToHDF5 = function (infile, outdir, options = {}, statusHandler = undefi
       resolve(stats);
     };
 
-    _file.CSV.parseFile(infile, onData, onEnd);
+    _file.CSVFile.parseFile(infile, onData, onEnd);
   });
 };
 

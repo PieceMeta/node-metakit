@@ -26,22 +26,17 @@ var _writeFileAtomic = require('write-file-atomic');
 
 var _writeFileAtomic2 = _interopRequireDefault(_writeFileAtomic);
 
+var _bluebird = require('bluebird');
+
+var _bluebird2 = _interopRequireDefault(_bluebird);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-const _config = new WeakMap(),
-      _meta = new WeakMap();
-
 class BaseFile extends _tinyEmitter2.default {
-  constructor(config = {}) {
+  constructor(config = {}, data = undefined) {
     super();
 
     const defaultConfig = {
-      encoder: data => {
-        return Promise.resolve(data);
-      },
-      decoder: data => {
-        return Promise.resolve(data);
-      },
       meta: {},
       opts: {
         atomic: true,
@@ -50,22 +45,23 @@ class BaseFile extends _tinyEmitter2.default {
     };
 
     this._config = Object.assign({}, defaultConfig);
-    this._config = Object.assign(this._config, config);
-    this._data = undefined;
+    if (typeof config === 'object') this._config = Object.assign(this._config, config);
+    this._data = data;
   }
 
-  static load(filepath) {
+  load(filepath) {
     const _ctx = this;
-    return _fs2.default.readFile(_path2.default.resolve(filepath)).then(data => _ctx._config.decoder(_ctx)).catch(err => {
+    return _fs2.default.readFile(_path2.default.resolve(filepath)).then(data => _ctx._decoder(data)).then(data => Object.assign(_ctx, data)).catch(err => {
       throw err;
     });
   }
+
   save(filepath, createPath = true) {
     const _ctx = this;
     filepath = _path2.default.resolve(filepath);
-    Promise.resolve().then(() => {
+    return _bluebird2.default.resolve().then(() => {
       if (createPath === true) {
-        return (0, _mkdirpPromise2.default)(filepath).catch(err => {
+        return (0, _mkdirpPromise2.default)(_path2.default.dirname(filepath)).catch(err => {
           console.log(err);
         });
       }
@@ -80,9 +76,19 @@ class BaseFile extends _tinyEmitter2.default {
       }
 
       return _ctx;
-    }).then(data => _ctx._config.encoder(data)).then(data => (0, _writeFileAtomic2.default)(filepath, data)).catch(err => {
+    }).then(data => _ctx._encoder(_ctx)).then(data => {
+      return _bluebird2.default.promisify(_writeFileAtomic2.default)(filepath, data, {});
+    }).catch(err => {
       throw err;
     });
+  }
+
+  _decoder(data) {
+    return _bluebird2.default.resolve(data);
+  }
+
+  _encoder(data) {
+    return _bluebird2.default.resolve(data);
   }
 
   get config() {
@@ -99,6 +105,9 @@ class BaseFile extends _tinyEmitter2.default {
   }
   get meta() {
     return this._config.meta;
+  }
+  set meta(val) {
+    this._config.meta = val;
   }
 }
 

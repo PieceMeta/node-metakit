@@ -16,10 +16,10 @@ var _fs2 = _interopRequireDefault(_fs);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-class CSV {
+class CSVFile {
   static parseFile(filename, dataCallback, endCallback) {
-    const stream = CSV.getStream(filename);
-    CSV.parseStream(stream, dataCallback, endCallback);
+    const stream = CSVFile.getStream(filename);
+    CSVFile.parseStream(stream, dataCallback, endCallback);
   }
   static parseStream(stream, dataCallback, endCallback) {
     _assert2.default.ok(stream instanceof _fs2.default.ReadStream);
@@ -35,9 +35,9 @@ class CSV {
   }
   static getStream(filename) {
     _assert2.default.equal(typeof filename, 'string');
-    process.stdout.write(`Opening CSV file for input at:\n${filename}\n\n`);
+    // process.stdout.write(`Opening CSV file for input at:\n${filename}\n\n`)
     return _fs2.default.createReadStream(filename);
   }
 }
 
-exports.default = CSV;
+exports.default = CSVFile;

@@ -29,16 +29,17 @@ var _view2 = _interopRequireDefault(_view);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const defaultConfig = {
+  id: undefined,
   views: []
 };
 
 class Package extends _file.JSONFile {
   constructor(filepath = null, config = {}) {
     super(filepath);
-    this._id = (0, _v2.default)();
     this._dirty = false;
     this._config = Object.assign(super.config || {}, defaultConfig);
     this._config = Object.assign(this._config, config);
+    if (!this._config.id) this._config.id = (0, _v2.default)();
   }
 
   addView(layout) {
@@ -60,7 +61,10 @@ class Package extends _file.JSONFile {
   }
 
   get id() {
-    return this._id;
+    return this._config.id;
+  }
+  set id(val) {
+    this._config.id = val;
   }
   get meta() {
     return this._config.meta;
@@ -73,8 +77,14 @@ class Package extends _file.JSONFile {
   get views() {
     return this._config.views;
   }
+  set views(val) {
+    this._config.views = val;
+  }
   get isDirty() {
     return this._dirty === true;
+  }
+  set isDirty(val) {
+    this._dirty = val;
   }
 
   toJSON() {
@@ -88,7 +98,7 @@ class Package extends _file.JSONFile {
     return this.toJSON();
   }
 
-  static load(filepath) {
+  load(filepath) {
     _assert2.default.equal(typeof filepath, 'string');
     return super.load(_path2.default.join(filepath, 'index.json')).then(config => {
       return new Package(filepath, config);

@@ -123,7 +123,7 @@ const CSVToLMDB = function (infile, outdir, options = {}, statusHandler = undefi
       resolve(stats);
     };
 
-    _index2.CSV.parseFile(infile, onData, onEnd);
+    _index2.CSVFile.parseFile(infile, onData, onEnd);
   });
 };
 

@@ -22,13 +22,13 @@ var _nodeLmdb = require('node-lmdb');
 
 var _nodeLmdb2 = _interopRequireDefault(_nodeLmdb);
 
-var _structure = require('../../data/structure');
+var _index = require('../../data/structure/index');
 
 var _double = require('../../data/types/double');
 
 var _double2 = _interopRequireDefault(_double);
 
-var _data = require('../../data');
+var _index2 = require('../../data/index');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -152,7 +152,7 @@ class LMDB {
     }
     let type;
     switch (this._meta[dbId].meta.type) {
-      case _data.types.MKT_DOUBLE_ARRAY:
+      case _index2.types.MKT_DOUBLE_ARRAY:
         type = Float64Array;
         break;
       default:
@@ -161,7 +161,7 @@ class LMDB {
     if (this._meta[dbId].cursor.key) {
       return {
         key: parseKey ? _double2.default.fromString(this._meta[dbId].cursor.key) : this._meta[dbId].cursor.key,
-        data: new _structure.TypedBufferView(res.buffer, type, res.buffer.byteOffset, res.buffer.length)
+        data: new _index.TypedBufferView(res.buffer, type, res.buffer.byteOffset, res.buffer.length)
       };
     }
   }

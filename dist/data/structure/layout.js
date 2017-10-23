@@ -10,6 +10,10 @@ var _v = require('uuid/v4');
 
 var _v2 = _interopRequireDefault(_v);
 
+var _bluebird = require('bluebird');
+
+var _bluebird2 = _interopRequireDefault(_bluebird);
+
 var _messaging = require('../../messaging');
 
 var _index = require('./index');
@@ -20,11 +24,11 @@ class Layout extends _messaging.Emitter {
   constructor(config = {}, data = undefined) {
     super();
     const defaultConfig = {
+      dbs: {},
       meta: {},
       paths: {},
       fragments: [],
-      basepath: null,
-      dbs: {}
+      basepath: null
     };
     let dbId;
     this._config = Object.assign({}, defaultConfig);
@@ -33,7 +37,7 @@ class Layout extends _messaging.Emitter {
       this._id = (0, _v2.default)();
       this._config.id = this.id;
       if (this.hasStorage === true) dbId = this._db.createDb(this.id, false);else dbId = (0, _v2.default)();
-      this.config.dbs[dbId] = {
+      this._config.dbs[dbId] = {
         type: 'LMDB',
         id: dbId,
         config: {}
@@ -42,17 +46,17 @@ class Layout extends _messaging.Emitter {
       if (this.hasStorage === true) this._db.openDb(this.id);
     }
     if (typeof data === 'object') {
-      this.configureLayoutChildren(data);
+      return this.configureLayoutChildren(data);
     }
   }
 
   configureLayoutChildren(data, parentPath = '') {
     const _ctx = this;
-    return Promise.each(_ctx.config.fragments, fragment => {
+    return _bluebird2.default.each(_ctx._config.fragments, fragment => {
       fragment.slug = (0, _slug2.default)(fragment.title || fragment.id);
       let currentPath = `${parentPath}/${fragment.slug}`;
       _ctx.config.paths[currentPath] = fragment.id;
-      return Promise.resolve().then(() => {
+      return _bluebird2.default.resolve().then(() => {
         if (Array.isArray(fragment.children) && fragment.children.length) {
           return this.configureLayoutChildren(data, `${currentPath}`);
         }
