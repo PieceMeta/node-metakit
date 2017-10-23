@@ -4,7 +4,7 @@
   "description": "A toolkit to handle storage, playback and distribution of structured alphanumerical data.",
   "main": "dist/index.js",
   "scripts": {
-    "clean": "rm -r ./dist && rm -r ./lib && rm -r ./install",
+    "clean": "rm -rf ./dist && rm -rf ./lib && rm -rf ./install",
     "eslint": "cross-env NODE_ENV=production eslint src/",
     "build": "cross-env NODE_ENV=production babel --copy-files -d dist src",
     "release": "npm run clean && npm run build",
