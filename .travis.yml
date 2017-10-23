@@ -1,22 +1,28 @@
 language: node_js
-node_js:
-  - "8"
+node_js: "8"
+env: # important !
+
 before_install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install llvm gcc hdf5; fi
   - npm install -g greenkeeper-lockfile@1
+
 before_script:
   - greenkeeper-lockfile-update
 after_script:
   - greenkeeper-lockfile-upload
+
 script:
   - npm run build
   - npm test
+
 cache:
   timeout: 1200
   directories:
     - node_modules
+
 matrix:
+  fast_finish: true
   include:
     # Ubuntu 14.04
     - os: linux
@@ -35,6 +41,7 @@ matrix:
             - libblas-dev
             - libopenblas-dev
             - libhdf5-dev
+  allow_failures:
     # macOS 10.12
     - os: osx
       osx_image: xcode8.3
