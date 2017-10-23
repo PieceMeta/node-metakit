@@ -9,12 +9,15 @@ matrix:
     - os: osx
       osx_image: xcode6.4
       before_install:
+        - brew update
         - brew install gcc@4.9
       env: CC=gcc-4.9 && CXX=g++-4.9
     # macOS 10.11
     - os: osx
       osx_image: xcode7.3
       before_install:
+        - brew update
+        - brew upgrade
         - brew install gcc@4.9
       env: CC=gcc-4.9 && CXX=g++-4.9
     # macOS 10.12
@@ -26,8 +29,10 @@ matrix:
 language: node_js
 node_js:
   - "8"
+env: CXXFLAGS=-g -std=c++11 -Wall -pedantic
 before_install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew upgrade; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install hdf5 --c++11; fi
   - npm install -g npm
   - npm install -g greenkeeper-lockfile@1
