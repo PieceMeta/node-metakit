@@ -2,16 +2,17 @@ const
   helper = require('../../helper'),
   chai = require('chai'),
   path = require('path'),
+  os = require('os'),
   chance = new (require('chance'))(),
   uuidValidator = require('uuid-validate')
 chai.should()
 
-const LMDB = require(helper.requirePath('io/file')).LMDB,
+const LMDB = require(helper.requirePath('io/db')).LMDB,
   TypedBufferView = require(helper.requirePath('data/structure')).TypedBufferView,
   data = require(helper.requirePath('data'))
 
 const config = {
-  filepath: path.resolve(`/var/tmp/mtk-testlmdb-${chance.word({syllables: 3})}`),
+  filepath: path.join(os.tmpdir(), `mtk-testlmdb-${chance.word({syllables: 3})}`),
   max_gb: 4,
   max_dbs: 10,
   generate_entries: 200,
