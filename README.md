@@ -19,22 +19,20 @@ npm install --save metakit
 
 ### Prerequisites
 
-#### General
-
 Node.js >= v8.7.0
   - [NVM](https://github.com/creationix/nvm#installation) (recommended)
   - "one-click" [Installer](https://nodejs.org/en/download/current/)
   - your favourite
   [Package Manager](https://nodejs.org/en/download/package-manager/).
 
-#### Platform-specific
+### Build tools
 
-**macOS**
+#### macOS
 ```shell
 xcode-select --install
 ```
 
-**Ubuntu 14.04**
+#### Ubuntu 14.04
 
 [![Build Status](https://travis-ci.org/PieceMeta/node-metakit.svg?branch=master)](https://travis-ci.org/PieceMeta/node-metakit)
 
@@ -43,7 +41,7 @@ sudo apt-get install build-essential gcc-4.9 g++-4.9
 export CC=gcc-4.9 && CXX=g++-4.9
 ```
 
-**Windows**
+#### Windows
 
 [![Build status](https://ci.appveyor.com/api/projects/status/2ca1sqrv6p3x98i1?svg=true)](https://ci.appveyor.com/project/dasantonym/node-metakit)
 
@@ -61,9 +59,9 @@ npm i -g windows-build-tools node-gyp mocha
 npm config set msvs_version 2015 --global
 ```
 
-#### Optional
+### Optional features
 
-**HDF5 library**
+#### HDF5 library
 
 Adds HDF5 compatibility in addition to LMDB. Needs a rebuild of the project, not (currently) available through NPM.
 
@@ -82,7 +80,8 @@ Before rebuild, add the hdf5 module with ``npm i hdf5``, then uncomment the HDF 
 [![Greenkeeper badge](https://badges.greenkeeper.io/PieceMeta/node-metakit.svg)](https://greenkeeper.io/)
 [![Dependency Status](https://gemnasium.com/badges/github.com/PieceMeta/node-metakit.svg)](https://gemnasium.com/github.com/PieceMeta/node-metakit)
 
+### Transpile ES6 source
+
 ```shell
-# Clone the repo, then run
 npm run build
 ```
