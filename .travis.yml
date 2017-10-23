@@ -1,5 +1,4 @@
 language: node_js
-env: # important !
 matrix:
   include:
     # Ubuntu 14.04
@@ -22,6 +21,7 @@ matrix:
     # macOS 10.12
     - os: osx
       osx_image: xcode8.3
+      env: # we're good.
 before_install:
   - npm install -g greenkeeper-lockfile@1
 before_script:
