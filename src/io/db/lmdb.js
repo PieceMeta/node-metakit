@@ -4,9 +4,9 @@ import path from 'path'
 import uuid4 from 'uuid/v4'
 import lmdb from 'node-lmdb'
 
-import { TypedBufferView } from '../../data/structure'
+import { TypedBufferView } from '../../data/structure/index'
 import Double from '../../data/types/double'
-import { types } from '../../data'
+import { types } from '../../data/index'
 
 const msgs = {
   env_exists: 'Environment already initialized',

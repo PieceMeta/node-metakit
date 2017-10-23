@@ -15,7 +15,7 @@ class BaseEmitter extends TinyEmitter {
     if (payload) assert.equal(typeof payload, 'object')
     if (type) assert.equal(typeof type, 'number')
     if (target) assert.equal(typeof target, 'object')
-    const evt = BaseEvent.make(payload, type || this[_symEmitterConfig].defaultType, target)
+    const evt = BaseEvent.make(payload, target, type || this[_symEmitterConfig].defaultType)
     super.emit(evt.type, evt)
   }
 

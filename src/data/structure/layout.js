@@ -9,11 +9,11 @@ class Layout extends Emitter {
   constructor (config = {}, data = undefined) {
     super()
     const defaultConfig = {
+      dbs: {},
       meta: {},
       paths: {},
       fragments: [],
-      basepath: null,
-      dbs: {}
+      basepath: null
     }
     let dbId
     this._config = Object.assign({}, defaultConfig)
@@ -33,7 +33,7 @@ class Layout extends Emitter {
       if (this.hasStorage === true) this._db.openDb(this.id)
     }
     if (typeof data === 'object') {
-      this.configureLayoutChildren(data)
+      return this.configureLayoutChildren(data)
     }
   }
 
@@ -49,7 +49,8 @@ class Layout extends Emitter {
             return this.configureLayoutChildren(data, `${currentPath}`)
           }
           return this
-        }).then(layout => {
+        })
+        .then(layout => {
           const fragment = new Fragment(layout)
           _ctx.fragments[fragment.id] = fragment
           return this

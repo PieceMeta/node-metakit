@@ -17,6 +17,11 @@ class Fragment extends Emitter {
     this.init(Object.assign({}, config))
   }
 
+  init (config) {
+    this._value = types.make(config.type, config)
+    this._config = config
+  }
+
   update (value, time = undefined, copy = false) {
     this.time = time || types.make(types.MKT_TIMESTAMP)
     this._key = util.keyFromDouble(time)
@@ -78,11 +83,6 @@ class Fragment extends Emitter {
   }
   toString () {
     return this.toJSON()
-  }
-
-  init (config) {
-    this._value = types.make(config.type, config)
-    this._config = config
   }
 }
 

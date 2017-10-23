@@ -1,0 +1,4 @@
+message MetaData {
+  optional string id = 1;
+  map<string, string> entries = 2;
+}
