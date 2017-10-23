@@ -29,11 +29,18 @@ class BaseEmitter extends _tinyEmitter2.default {
     if (type) _assert2.default.equal(typeof type, 'number');
     if (target) _assert2.default.equal(typeof target, 'object');
     const evt = _baseEvent2.default.make(payload, target, type || this[_symEmitterConfig].defaultType);
-    super.emit(evt.type, evt);
+    super.emit(evt.info.type.toString(), evt);
+  }
+
+  on(type, fn) {
+    _assert2.default.equal(typeof type, 'number');
+    _assert2.default.equal(typeof fn, 'function');
+    super.on(type.toString(), fn);
   }
 
   configureEmitter(defaultType = _baseEvent2.default.types.MKT_EVENT, emitterId = 'base-emitter') {
     this[_symEmitterConfig].defaultType = defaultType;
+    this[_symEmitterConfig].emitterId = emitterId;
   }
 
   get emitterConfig() {

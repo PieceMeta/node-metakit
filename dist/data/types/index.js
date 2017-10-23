@@ -27,8 +27,8 @@ var _range2 = _interopRequireDefault(_range);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-const MKT_TIMESTAMP = 0,
-      MKT_RANGE = 1,
+const MKT_TIMESTAMP = 1,
+      MKT_RANGE = 2,
       MKT_DOUBLE_VALUE = 100,
       MKT_DOUBLE_MATRIX = 110,
       MKT_DOUBLE_VECTOR = 120,
