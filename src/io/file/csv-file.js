@@ -25,7 +25,7 @@ class CSVFile {
   }
   static getStream (filename) {
     assert.equal(typeof filename, 'string')
-    process.stdout.write(`Opening CSV file for input at:\n${filename}\n\n`)
+    // process.stdout.write(`Opening CSV file for input at:\n${filename}\n\n`)
     return fs.createReadStream(filename)
   }
 }
