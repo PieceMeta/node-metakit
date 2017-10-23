@@ -2,9 +2,16 @@ sudo: required
 dist: trusty
 language: node_js
 node_js:
-  - "8.6"
+  - "8"
 env:
   - CC=gcc-4.9 && CXX=g++-4.9
+before_install:
+  - npm install -g npm
+  - npm install -g greenkeeper-lockfile@1
+before_script:
+  - greenkeeper-lockfile-update
+after_script:
+  - greenkeeper-lockfile-upload
 script:
   - npm run build
   - npm test

@@ -5,6 +5,7 @@ A toolkit to handle storage, playback and distribution of structured alphanumeri
 [![npm version](https://badge.fury.io/js/metakit.svg)](https://badge.fury.io/js/metakit)
 [![Maintainability](https://api.codeclimate.com/v1/badges/7f4dbdb7d4dc17aa9dcb/maintainability)](https://codeclimate.com/github/PieceMeta/node-metakit/maintainability)
 [![Build Status](https://travis-ci.org/PieceMeta/node-metakit.svg?branch=master)](https://travis-ci.org/PieceMeta/node-metakit)
+[![Build status](https://ci.appveyor.com/api/projects/status/2ca1sqrv6p3x98i1?svg=true)](https://ci.appveyor.com/project/dasantonym/node-metakit)
 [![Dependency Status](https://gemnasium.com/badges/github.com/PieceMeta/node-metakit.svg)](https://gemnasium.com/github.com/PieceMeta/node-metakit)
 
 ## Requirements
@@ -12,12 +13,30 @@ A toolkit to handle storage, playback and distribution of structured alphanumeri
 :rocket: Tested on:
 * macOS 10.11 & 10.12
 * Ubuntu 14.04
+* Windows 8.1
 
 ### Dependencies
 
 #### Build tools
-  - macOS: ``xcode-select --install``
-  - Ubuntu 14.04: ``sudo apt-get install build-essential gcc-4.9 g++-4.9``
+
+**macOS**
+```
+xcode-select --install
+```
+
+**Ubuntu 14.04**
+```
+sudo apt-get install build-essential gcc-4.9 g++-4.9
+export CC=gcc-4.9 && CXX=g++-4.9
+```
+
+**Windows**
+
+Install [Visual Studio 2015](https://www.visualstudio.com/downloads/) and [MinGW](https://sourceforge.net/projects/mingw/files/Installer/), then run:
+```
+npm i -g windows-build-tools node-gyp mocha
+npm config set msvs_version 2015 --global
+```
   
 #### Node.js >= 8.6.0
   - [NVM](https://github.com/creationix/nvm#installation) (recommended)
@@ -41,11 +60,7 @@ Before rebuild, add the hdf5 module with ``npm i hdf5``, then uncomment the HDF 
 ## Install
 
 ```shell
-# On Ubuntu 14.04 first select the correct compiler
-export CC=gcc-4.9 && CXX=g++-4.9
-
-# Otherwise only run this
-npm install -g metakit
+npm install metakit
 ```
 
 ## Build
