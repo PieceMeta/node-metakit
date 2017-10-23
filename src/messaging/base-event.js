@@ -1,7 +1,7 @@
 const _symEventConfig = Symbol('EventConfig'),
   _typesConfig = {
     value: {
-      MKT_EVENT: 0,
+      MKT_EVENT: 1,
       MKT_EVENT_DATA: 25,
       MKT_EVENT_IO: 50,
       MKT_EVENT_PROCESS: 75,
@@ -13,13 +13,13 @@ const _symEventConfig = Symbol('EventConfig'),
 
 class BaseEvent {
   constructor (payload, context, type) {
-    const config = {
-      value: { payload, context, type },
+    const value = {payload, context, type}
+    Object.defineProperty(this, _symEventConfig, {
+      value,
       enumerable: true,
       writable: false,
       configurable: false
-    }
-    Object.defineProperty(this, _symEventConfig, config)
+    })
   }
 
   get info () {

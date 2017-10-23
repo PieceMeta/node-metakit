@@ -16,11 +16,18 @@ class BaseEmitter extends TinyEmitter {
     if (type) assert.equal(typeof type, 'number')
     if (target) assert.equal(typeof target, 'object')
     const evt = BaseEvent.make(payload, target, type || this[_symEmitterConfig].defaultType)
-    super.emit(evt.type, evt)
+    super.emit(evt.info.type.toString(), evt)
+  }
+
+  on (type, fn) {
+    assert.equal(typeof type, 'number')
+    assert.equal(typeof fn, 'function')
+    super.on(type.toString(), fn)
   }
 
   configureEmitter (defaultType = BaseEvent.types.MKT_EVENT, emitterId = 'base-emitter') {
     this[_symEmitterConfig].defaultType = defaultType
+    this[_symEmitterConfig].emitterId = emitterId
   }
 
   get emitterConfig () {

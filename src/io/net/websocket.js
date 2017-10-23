@@ -17,17 +17,20 @@ class WebSocket extends Emitter {
     this._server.on('connection', function (ws) {
       const id = uuid()
       _ctx._connections[id] = ws
-      _ctx._connections[id].on('message', _ctx._onMessage(_ctx, id))
+      _ctx._connections[id].on('message', (message) => {
+        _ctx.emit({id, message}, BaseEvent.types.MKT_EVENT_IO)
+      })
       _ctx._connections[id].on('close', () => {
         _ctx._connections[id] = undefined
         delete _ctx._connections[id]
       })
     })
   }
-  _onMessage (_ctx, id) {
-    return function (message) {
-      _ctx.emit({ id, message }, BaseEvent.types.MKT_EVENT_IO)
-    }
+  tearDown () {
+    return new Promise(resolve => {
+      this._server.close()
+      resolve()
+    })
   }
   broadcast (message) {
     const _ctx = this

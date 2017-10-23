@@ -7,8 +7,8 @@ import Timestamp from './timestamp'
 import Range from './range'
 
 const
-  MKT_TIMESTAMP = 0,
-  MKT_RANGE = 1,
+  MKT_TIMESTAMP = 1,
+  MKT_RANGE = 2,
 
   MKT_DOUBLE_VALUE = 100,
   MKT_DOUBLE_MATRIX = 110,
