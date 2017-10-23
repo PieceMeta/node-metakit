@@ -1,6 +1,6 @@
 {
   "name": "metakit",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A toolkit to handle storage, playback and distribution of structured alphanumerical data.",
   "main": "dist/index.js",
   "scripts": {

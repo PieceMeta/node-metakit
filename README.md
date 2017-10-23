@@ -30,7 +30,7 @@ Node.js >= v8.7.0
 #### Platform-specific
 
 **macOS**
-```
+```shell
 xcode-select --install
 ```
 
@@ -38,7 +38,7 @@ xcode-select --install
 
 [![Build Status](https://travis-ci.org/PieceMeta/node-metakit.svg?branch=master)](https://travis-ci.org/PieceMeta/node-metakit)
 
-```
+```shell
 sudo apt-get install build-essential gcc-4.9 g++-4.9
 export CC=gcc-4.9 && CXX=g++-4.9
 ```
@@ -50,6 +50,7 @@ export CC=gcc-4.9 && CXX=g++-4.9
 Install required software ([Visual Studio 2015](https://www.visualstudio.com/downloads/) and [MinGW](https://sourceforge.net/projects/mingw/files/Installer/)) manually, or use this [fetch script gist](https://gist.github.com/dasantonym/74a15caa27a93ab20903badba94783b5):
 
 ```shell
+npm install bluebird node-wget-promise fs-extra
 curl -fsSL https://gist.githubusercontent.com/dasantonym/74a15caa27a93ab20903badba94783b5/raw/mtk-dl-dependencies.js | node -r bluebird
 ```
 
