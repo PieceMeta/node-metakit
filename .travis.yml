@@ -38,6 +38,13 @@ after_script:
 script:
   - npm run build
   - npm test
+cache:
+  timeout: 900
+  directories:
+    - $HOME/.cache
+    - node_modules
+    - lib
+    - install
 addons:
   apt:
     sources:
