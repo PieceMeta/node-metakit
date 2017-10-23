@@ -28,6 +28,9 @@ Node.js >= v8.7.0
 ### Build tools
 
 #### macOS
+
+[![Build Status](https://travis-ci.org/PieceMeta/node-metakit.svg?branch=master)](https://travis-ci.org/PieceMeta/node-metakit)
+
 ```shell
 xcode-select --install
 ```
