@@ -28,7 +28,7 @@
   "dependencies": {
     "async-lock": "^1.0.0",
     "big.js": "^5.0.2",
-    "bignumber.js": "^4.1.0",
+    "bignumber.js": "^5.0.0",
     "bluebird": "^3.5.1",
     "bvh": "git+https://github.com/hitsujiwool/bvh.git",
     "clui": "^0.3.6",
