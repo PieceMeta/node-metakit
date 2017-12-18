@@ -1,6 +1,8 @@
 'use strict';
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.MKT_DOUBLE_ARRAY = exports.MKT_DOUBLE_VECTOR = exports.MKT_DOUBLE_MATRIX = exports.MKT_DOUBLE_VALUE = exports.MKT_RANGE = exports.MKT_TIMESTAMP = exports.make = undefined;
 
 var _assert = require('assert');

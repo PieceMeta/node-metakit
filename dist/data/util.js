@@ -1,6 +1,8 @@
 'use strict';
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 const copyBuffer = function (source) {
   let buffer = new ArrayBuffer(source.byteLength);
   new Uint8Array(buffer).set(new Uint8Array(source));

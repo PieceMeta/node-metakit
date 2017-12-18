@@ -1,6 +1,8 @@
 'use strict';
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.JSONFile = exports.CSVFile = exports.BVHFile = exports.BaseFile = undefined;
 
 var _baseFile = require('./base-file');

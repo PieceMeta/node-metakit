@@ -1,6 +1,8 @@
 'use strict';
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.Stats = exports.Scheduler = exports.Logger = undefined;
 
 var _logger = require('./logger');

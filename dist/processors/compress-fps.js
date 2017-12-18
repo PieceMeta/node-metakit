@@ -1,6 +1,8 @@
 'use strict';
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 var _assert = require('assert');
 
@@ -96,3 +98,4 @@ class CompressFPS extends _baseProcessor2.default {
 }
 
 exports.default = CompressFPS;
+module.exports = exports['default'];

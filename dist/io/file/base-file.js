@@ -1,6 +1,8 @@
 'use strict';
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 var _tinyEmitter = require('tiny-emitter');
 
@@ -112,3 +114,4 @@ class BaseFile extends _tinyEmitter2.default {
 }
 
 exports.default = BaseFile;
+module.exports = exports['default'];

@@ -1,6 +1,8 @@
 'use strict';
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 var _assert = require('assert');
 
@@ -101,3 +103,4 @@ class Fragment extends _messaging.Emitter {
 }
 
 exports.default = Fragment;
+module.exports = exports['default'];

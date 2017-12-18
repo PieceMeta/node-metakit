@@ -1,6 +1,8 @@
 'use strict';
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 var _baseFile = require('./base-file');
 
@@ -34,3 +36,4 @@ class JSONFile extends _baseFile2.default {
 }
 
 exports.default = JSONFile;
+module.exports = exports['default'];

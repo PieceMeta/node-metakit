@@ -1,6 +1,8 @@
 'use strict';
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 require('colors');
 
@@ -31,3 +33,4 @@ const BVHToLMDB = function (infile, outdir, options = {}, statusHandler = undefi
 };
 
 exports.default = BVHToLMDB;
+module.exports = exports['default'];

@@ -1,6 +1,8 @@
 'use strict';
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 var _osc = require('osc');
 
@@ -110,3 +112,4 @@ class OSC extends _tinyEmitter2.default {
 }
 
 exports.default = OSC;
+module.exports = exports['default'];

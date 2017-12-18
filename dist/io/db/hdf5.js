@@ -1,6 +1,8 @@
 'use strict';
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 var _assert = require('assert');
 
@@ -43,3 +45,4 @@ class HDF5 {
 }
 
 exports.default = HDF5;
+module.exports = exports['default'];

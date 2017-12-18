@@ -1,6 +1,8 @@
 'use strict';
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 const _symEventConfig = Symbol('EventConfig'),
       _typesConfig = {
   value: {
@@ -37,3 +39,4 @@ class BaseEvent {
 Object.defineProperty(BaseEvent, 'types', _typesConfig);
 
 exports.default = BaseEvent;
+module.exports = exports['default'];

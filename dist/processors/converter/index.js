@@ -1,6 +1,8 @@
 'use strict';
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 var _path = require('path');
 
@@ -47,3 +49,4 @@ class Converter extends _baseProcessor2.default {
 Object.defineProperty(Converter, 'modes', { value: _convertModes, writable: false, configurable: false });
 
 exports.default = Converter;
+module.exports = exports['default'];

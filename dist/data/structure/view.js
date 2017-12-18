@@ -1,6 +1,8 @@
 'use strict';
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 var _v = require('uuid/v4');
 
@@ -150,3 +152,4 @@ class View extends _messaging.Emitter {
 }
 
 exports.default = View;
+module.exports = exports['default'];

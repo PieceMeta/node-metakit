@@ -1,6 +1,8 @@
 'use strict';
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.View = exports.TypedBufferView = exports.Package = exports.Layout = exports.Fragment = undefined;
 
 var _fragment = require('./fragment');

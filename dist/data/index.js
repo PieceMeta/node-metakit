@@ -1,6 +1,8 @@
 'use strict';
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.DataError = exports.util = exports.types = exports.structure = undefined;
 
 var _structure = require('./structure');

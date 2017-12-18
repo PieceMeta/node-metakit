@@ -1,6 +1,8 @@
 'use strict';
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 var _assert = require('assert');
 
@@ -116,3 +118,4 @@ class Package extends _file.JSONFile {
 }
 
 exports.default = Package;
+module.exports = exports['default'];

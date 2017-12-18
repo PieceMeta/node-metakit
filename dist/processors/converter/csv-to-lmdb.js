@@ -1,6 +1,8 @@
 'use strict';
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 require('colors');
 
@@ -128,3 +130,4 @@ const CSVToLMDB = function (infile, outdir, options = {}, statusHandler = undefi
 };
 
 exports.default = CSVToLMDB;
+module.exports = exports['default'];

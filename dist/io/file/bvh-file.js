@@ -1,6 +1,8 @@
 'use strict';
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 var _baseFile = require('./base-file');
 
@@ -25,3 +27,4 @@ class BVHFile extends _baseFile2.default {
 }
 
 exports.default = BVHFile;
+module.exports = exports['default'];

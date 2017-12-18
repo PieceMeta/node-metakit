@@ -1,6 +1,8 @@
 'use strict';
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 require('colors');
 
@@ -119,3 +121,4 @@ class Stats {
 }
 
 exports.default = Stats;
+module.exports = exports['default'];

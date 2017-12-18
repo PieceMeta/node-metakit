@@ -1,6 +1,8 @@
 'use strict';
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 var _assert = require('assert');
 
@@ -41,3 +43,4 @@ class CSVFile {
 }
 
 exports.default = CSVFile;
+module.exports = exports['default'];

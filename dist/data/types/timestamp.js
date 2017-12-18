@@ -1,6 +1,8 @@
 'use strict';
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 var _microtime = require('microtime');
 
@@ -26,3 +28,4 @@ class Timestamp extends _double2.default {
 }
 
 exports.default = Timestamp;
+module.exports = exports['default'];

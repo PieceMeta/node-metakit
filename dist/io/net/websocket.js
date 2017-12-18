@@ -1,6 +1,8 @@
 'use strict';
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 var _assert = require('assert');
 
@@ -58,3 +60,4 @@ class WebSocket extends _messaging.Emitter {
 }
 
 exports.default = WebSocket;
+module.exports = exports['default'];

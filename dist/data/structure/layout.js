@@ -1,6 +1,8 @@
 'use strict';
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 var _slug = require('slug');
 
@@ -84,3 +86,4 @@ class Layout extends _messaging.Emitter {
 }
 
 exports.default = Layout;
+module.exports = exports['default'];

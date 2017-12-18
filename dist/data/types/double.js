@@ -1,6 +1,8 @@
 'use strict';
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 var _bignumber = require('bignumber.js');
 
@@ -18,3 +20,4 @@ class Double extends _bignumber2.default {
 }
 
 exports.default = Double;
+module.exports = exports['default'];

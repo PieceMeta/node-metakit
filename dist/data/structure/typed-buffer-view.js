@@ -1,6 +1,8 @@
 'use strict';
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 var _os = require('os');
 
@@ -39,3 +41,4 @@ class TypedBufferView {
 }
 
 exports.default = TypedBufferView;
+module.exports = exports['default'];

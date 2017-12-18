@@ -1,6 +1,8 @@
 'use strict';
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 var _debug = require('debug');
 
@@ -21,3 +23,4 @@ class Logger {
 }
 
 exports.default = Logger;
+module.exports = exports['default'];
