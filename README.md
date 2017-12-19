@@ -19,7 +19,7 @@ npm install --save metakit
 
 ### Prerequisites
 
-Node.js >= v8.7.0
+Node.js >= v9.0.0
   - [NVM](https://github.com/creationix/nvm#installation) (recommended)
   - "one-click" [Installer](https://nodejs.org/en/download/current/)
   - your favourite
