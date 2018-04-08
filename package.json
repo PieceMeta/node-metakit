@@ -47,7 +47,7 @@
     "moment": "^2.20.1",
     "mz": "^2.7.0",
     "nanotimer": "^0.3.15",
-    "node-lmdb": "^0.4.13",
+    "node-lmdb": "^0.5.0",
     "osc": "^2.2.0",
     "protobufjs": "^6.8.3",
     "protocol-buffers": "^4.0.0",
