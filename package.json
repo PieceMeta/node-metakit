@@ -79,6 +79,6 @@
     "sinon": "^4.5.0",
     "uuid-validate": "0.0.2",
     "gitbook-cli": "^2.3.2",
-    "rimraf": "^2.6.2"
+    "rimraf": "2.6.2"
   }
 }
