@@ -52,7 +52,7 @@
     "protobufjs": "^6.8.3",
     "protocol-buffers": "^4.0.0",
     "slug": "^0.9.1",
-    "tiny-emitter": "^2.0.2",
+    "tiny-emitter": "2.0.2",
     "uuid": "^3.1.0",
     "uws": "^10.148.0",
     "vectorious": "^4.8.1",
