@@ -55,7 +55,7 @@
     "tiny-emitter": "^2.0.2",
     "uuid": "^3.1.0",
     "uws": "^10.148.0",
-    "vectorious": "^4.8.1",
+    "vectorious": "^5.3.3",
     "write-file-atomic": "^2.3.0",
     "yargs": "^11.0.0"
   },
