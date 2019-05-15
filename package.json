@@ -48,7 +48,7 @@
     "mz": "^2.7.0",
     "nanotimer": "^0.3.15",
     "node-lmdb": "^0.6.0",
-    "osc": "^2.2.0",
+    "osc": "^2.3.0",
     "protobufjs": "^6.8.3",
     "protocol-buffers": "^4.0.0",
     "slug": "^0.9.1",
