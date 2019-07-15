@@ -57,7 +57,7 @@
     "uws": "^10.148.0",
     "vectorious": "^4.8.1",
     "write-file-atomic": "^2.3.0",
-    "yargs": "^11.0.0"
+    "yargs": "^13.3.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
