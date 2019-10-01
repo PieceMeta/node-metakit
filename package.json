@@ -68,7 +68,7 @@
     "babel-preset-env": "^1.6.1",
     "chai": "^4.1.2",
     "chance": "^1.0.12",
-    "eslint": "^4.14.0",
+    "eslint": "^6.5.1",
     "eslint-config-standard": "^11.0.0",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-node": "^6.0.0",
