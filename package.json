@@ -51,7 +51,7 @@
     "osc": "^2.2.0",
     "protobufjs": "^6.8.3",
     "protocol-buffers": "^4.0.0",
-    "slug": "^0.9.1",
+    "slug": "^3.2.0",
     "tiny-emitter": "^2.0.2",
     "uuid": "^3.1.0",
     "uws": "^10.148.0",
